@@ -3,6 +3,7 @@ import CarouselItem from "../carousel-item";
 import { Hidden, makeStyles } from "@material-ui/core";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { withStyles } from "@material-ui/core";
 
 import "./style.scss";
 

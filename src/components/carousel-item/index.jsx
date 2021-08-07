@@ -8,8 +8,8 @@ export default class CarouselItem extends Component {
       <>
         <img src={link} className="item-img d-block" alt="..." />
         <div className="carousel-caption d-none d-md-block">
-          <h5>{title}</h5>
-          <p>{description}</p>
+          {/* <h5>{title}</h5>
+          <p>{description}</p> */}
         </div>
       </>
     );

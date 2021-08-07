@@ -15,8 +15,7 @@ export const getMoiveList = () => {
     // call api
     axios({
       method: "GET",
-      url:
-        "https://movie0706.cybersoft.edu.vn/api/QuanLyPhim/LayDanhSachPhimPhanTrang?maNhom=GP01&soTrang=1&soPhanTuTrenTrang=9",
+      url: "https://movie0706.cybersoft.edu.vn/api/QuanLyPhim/LayDanhSachPhimPhanTrang?maNhom=GP01&soTrang=1&soPhanTuTrenTrang=8",
       data: null,
     })
       .then((res) => {

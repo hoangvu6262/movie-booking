@@ -12,3 +12,14 @@
     }
     
 }
+
+.carousel-indicators li{
+    margin: 10px !important;
+    height: 12px !important;
+    width: 12px !important;
+    border-radius: 50%;
+}
+
+.carousel-indicators .active {
+    background-color: #fb4226;
+}
