@@ -5,6 +5,7 @@ import "./style.scss";
 import { NavLink } from "react-router-dom";
 import { withRouter } from "react-router";
 import dateFormat from "date-format";
+import Loading from "../../../components/loading";
 
 class DetailMovie extends Component {
   renderShowTime = () => {
@@ -33,11 +34,7 @@ class DetailMovie extends Component {
   };
   render() {
     if (this.props.loading) {
-      return (
-        <div className="spinner-border" role="status">
-          <span className="sr-only">Loading...</span>
-        </div>
-      );
+      return <Loading />;
     } else {
       return (
         <div>

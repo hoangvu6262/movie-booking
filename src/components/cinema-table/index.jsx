@@ -6,6 +6,8 @@ import { getCinemaSystemInfo } from "../../store/actions/cinema.action";
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    // position: "relative",
+    zIndex: -1,
     marginTop: 100,
   },
   cinemaContainer: {
@@ -73,17 +75,13 @@ function CinemaTable(props) {
   const dispatch = useDispatch();
   const { cinemaInfo } = useSelector((state) => state.cinema);
 
+  //props
   const { cinemaList } = props;
-  // console.log(cinemaList);
 
   //handleClick để thay đổi hệ thống rạp
   const handleClick = (maHeThongRap) => {
-    // onCinemaInfoClick(maHeThongRap);
     dispatch(getCinemaSystemInfo(maHeThongRap));
-    // setListCinemaInfo([...cinemaInfo]);
   };
-
-  // console.log("list", listCinemaInfo);
 
   //render cinema list
   const renderCinemaList = () => {

@@ -11,7 +11,7 @@ import Carousel from "../../../components/carousel";
 import CinemaTable from "../../../components/cinema-table";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 import NavigateBeforeIcon from "@material-ui/icons/NavigateBefore";
-
+import Loading from "../../../components/loading";
 // import AmazingSlab from "../../../assets/font/AmazingSlab.ttf";
 // import font from "../../../assets/font/Monoton-Regular.ttf";
 
@@ -48,7 +48,6 @@ class Home extends Component {
   state = {
     dangChieu: true,
   };
-  // dangChieu = true;
   // change to dangChieu list movie
   handleClickChangeDangChieu = () => {
     this.setState({ ...this.state, dangChieu: true }, () => {
@@ -74,21 +73,11 @@ class Home extends Component {
     }
   };
 
-  //handleClick to render cinema info list
-  // handleClickCinemaInfoList = (maHeThongRap) => {
-  //   console.log(maHeThongRap);
-  //   this.props.dispatch(getCinemaSystemInfo(maHeThongRap));
-  // };
-
   render() {
     // console.log(this.props.cinemaList);
     const { classes } = this.props;
     if (this.props.loading) {
-      return (
-        <div className="spinner-border" role="status">
-          <span className="sr-only">Loading...</span>
-        </div>
-      );
+      return <Loading />;
     } else {
       return (
         <>
@@ -116,11 +105,7 @@ class Home extends Component {
               </IconButton>
             </Grid>
           </Container>
-          <CinemaTable
-            cinemaList={this.props.cinema}
-            // onCinemaInfoClick={this.handleClickCinemaInfoList}
-            // cinemaInfoList={this.state.cinemaInfo}
-          />
+          <CinemaTable cinemaList={this.props.cinema} />
         </>
       );
     }

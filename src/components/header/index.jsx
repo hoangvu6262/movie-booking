@@ -22,6 +22,7 @@ import AccountCircle from "@material-ui/icons/AccountCircle";
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    // zIndex: 0,
     opacity: 0.9,
     maxHeight: "60px",
     backgroundColor: "white",
