@@ -1,5 +1,9 @@
 import React, { Component } from "react";
 import { getMoiveList } from "../../../store/actions/movie.action";
+import {
+  getCinemaSystemInfo,
+  getCinemaSystem,
+} from "../../../store/actions/cinema.action";
 import { connect } from "react-redux";
 import { Container, Grid, IconButton, withStyles } from "@material-ui/core";
 import MovieCard from "../../../components/movie-card";
@@ -16,7 +20,7 @@ const styles = {
     padding: "30px 0",
     textAlign: "center",
     fontFamily: "Yanone Kaffeesatz",
-    fontWeight: 400,
+    fontWeight: 300,
     fontSize: "35px",
     "& ul": {
       display: "flex",
@@ -29,7 +33,7 @@ const styles = {
         cursor: "pointer",
         "&:hover": {
           color: "#fb4226",
-          fontSize: "38px",
+          fontSize: "40px",
         },
       },
     },
@@ -47,13 +51,13 @@ class Home extends Component {
   // dangChieu = true;
   // change to dangChieu list movie
   handleClickChangeDangChieu = () => {
-    this.setState({ dangChieu: true }, () => {
+    this.setState({ ...this.state, dangChieu: true }, () => {
       console.log(this.state.dangChieu);
     });
   };
   // change to sapChieu list movieList
   handleClickChangeSapChieu = () => {
-    this.setState({ dangChieu: false }, () => {
+    this.setState({ ...this.state, dangChieu: false }, () => {
       console.log(this.state.dangChieu);
     });
   };
@@ -70,7 +74,14 @@ class Home extends Component {
     }
   };
 
+  //handleClick to render cinema info list
+  // handleClickCinemaInfoList = (maHeThongRap) => {
+  //   console.log(maHeThongRap);
+  //   this.props.dispatch(getCinemaSystemInfo(maHeThongRap));
+  // };
+
   render() {
+    // console.log(this.props.cinemaList);
     const { classes } = this.props;
     if (this.props.loading) {
       return (
@@ -105,7 +116,11 @@ class Home extends Component {
               </IconButton>
             </Grid>
           </Container>
-          <CinemaTable />
+          <CinemaTable
+            cinemaList={this.props.cinema}
+            // onCinemaInfoClick={this.handleClickCinemaInfoList}
+            // cinemaInfoList={this.state.cinemaInfo}
+          />
         </>
       );
     }
@@ -113,6 +128,7 @@ class Home extends Component {
 
   componentDidMount() {
     this.props.dispatch(getMoiveList());
+    this.props.dispatch(getCinemaSystem());
   }
 }
 
@@ -121,6 +137,8 @@ const mapStateToProps = (state) => {
   return {
     movieList: state.movie.movieList,
     loading: state.common.loading,
+    cinema: state.cinema.cinemaList,
+    // cinemaInfoList: state.cinema.cinemaInfo,
   };
 };
 
