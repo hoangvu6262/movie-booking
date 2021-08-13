@@ -121,7 +121,7 @@ function CinemaTable(props) {
   };
 
   return (
-    <section className={classes.root}>
+    <section className={classes.root} id="cinema-list">
       <Container maxWidth="md" className={classes.cinemaContainer}>
         <Grid container>
           <Grid item xs={1}>

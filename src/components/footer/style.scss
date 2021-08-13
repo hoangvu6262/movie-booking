@@ -1,0 +1,157 @@
+footer{
+    margin-top: 30px;
+    background-color: #222;
+    padding-top: 25px;
+    padding-bottom: 15px;
+    .footer__content{
+        max-width: 912px;
+        margin: auto;
+        .footer__rowFirst{
+            width: 100%;
+            margin: 0;
+            .col-md-4{
+                .footer__title{
+                    font-size: 12px;
+                    color: #949494;
+                }     
+            }
+            .footer__left{
+                .row{
+                    .col-sm-6{
+                        .footer__text{
+                            font-size: 12px;
+                            font-weight: 600;
+                            color: gray;
+                            line-height: 2.3;
+                            cursor: pointer;
+                            margin: 0;
+                            transition: all 0.2s;
+                            &:hover{
+                                color: white;
+                            }
+                        }
+                    }
+                }
+            }
+            .footer__middle{
+                .row{
+                    .col-12{
+                        margin-bottom: 5px;
+                        a{
+                            img{
+                                width: 30px;
+                                height: 30px;
+                                border-radius: 50%;
+                                margin-right: 5px;
+                            }
+                        }
+                    }
+                }
+            }
+            .footer__right{
+                .row{
+                    .col-md-6{
+                        text-align: center;
+                        a{
+                            img{
+                                height: 30px;
+                                width: auto;
+                                margin: 5px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        .footer__hr{
+            margin: 25px 0;
+            border-top: 1px solid gray;
+        }
+        .footer__rowSecond{
+            width: 100%;
+            margin: 0;
+            .footer__img{
+                padding: 0;
+            }
+            .col-sm-1{
+                .footer__logo{
+                    img{
+                        width: 80px;
+                        height: 40px;
+                        border-radius: 6px;
+                    }
+                }
+            }
+            .col-sm-9{
+                font-size: 12px;
+                h6{
+                    color: white;
+                    font-size: 12px;
+                    margin: 0;
+                    line-height: 1.8;
+                }
+                p{
+                    color: #949494;
+                    margin: 0;
+                    line-height: 1.8;
+                    .footer__email{
+                        color: rgb(187, 37, 37);
+                        text-decoration: none;
+                    }
+                }
+            }
+            .col-sm-2{
+                .footer__BoCo{
+                    text-align: right;
+                    img{
+                        width: 130px;
+                    }
+                }
+            }
+            .col-sm-12{
+                max-width: fit-content;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: getBreakpoint("medium")){
+    footer{
+        .footer__content{
+            .footer__rowFirst{
+                text-align: center;
+                .footer__title{
+                    display: none!important;
+                }
+                .footer__left{
+                    .footer__hideOnMobile{
+                        display: none;
+                    }
+                    .footer__onMobile{
+                        .footer__text{
+                            display: inline-block;
+                            margin: 5px!important;
+                        }
+                    }
+                }
+                .footer__middle{
+                    display: none;
+                }
+                .footer__right{
+                    .footer__hideOnMobile{
+                        display: none;
+                    }
+                }
+            }
+            .footer__rowSecond{
+                text-align: center!important;
+                .footer__BoCo{
+                    text-align: center!important;
+                }
+                .footer__img{
+                    margin-bottom: 20px;
+                }
+            }
+        }
+    }
+}

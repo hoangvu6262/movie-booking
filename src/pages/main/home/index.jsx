@@ -12,11 +12,16 @@ import CinemaTable from "../../../components/cinema-table";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 import NavigateBeforeIcon from "@material-ui/icons/NavigateBefore";
 import Loading from "../../../components/loading";
+import BookingForm from "../../../components/booking-form";
 // import AmazingSlab from "../../../assets/font/AmazingSlab.ttf";
 // import font from "../../../assets/font/Monoton-Regular.ttf";
 
 const styles = {
+  // sliderContainer: {
+  //   position: "relative",
+  // },
   title: {
+    marginTop: 70,
     padding: "30px 0",
     textAlign: "center",
     fontFamily: "Yanone Kaffeesatz",
@@ -82,7 +87,8 @@ class Home extends Component {
       return (
         <>
           <Carousel />
-          <Container maxWidth="md">
+          <BookingForm />
+          <Container maxWidth="md" id="movie-list">
             <div className={classes.title}>
               <ul>
                 <li onClick={this.handleClickChangeDangChieu}>

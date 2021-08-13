@@ -85,8 +85,8 @@ export default function Header() {
   const [drawerOpen, setDrawerOpen] = React.useState(false);
   // header menu
   const Headermenu = [
-    { name: "Lịch chiếu", href: "#" },
-    { name: "Cụm rạp", href: "#" },
+    { name: "Lịch chiếu", href: "#movie-list" },
+    { name: "Cụm rạp", href: "#cinema-list" },
     { name: "Tin tức", href: "#" },
     { name: "Ứng dụng", href: "#" },
   ];
