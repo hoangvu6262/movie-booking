@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { postLogin } from "../../store/actions/user.action";
 import { useHistory } from "react-router-dom";
+import "./style.scss";
 
 export default function Login() {
   const result = useState(0);
@@ -34,7 +35,7 @@ export default function Login() {
   };
 
   return (
-    <div className="container">
+    <div className="container login">
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="taiKhoan">tài khoản: </label>

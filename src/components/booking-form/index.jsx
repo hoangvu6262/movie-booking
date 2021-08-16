@@ -5,6 +5,7 @@ import {
   InputLabel,
   Select,
   MenuItem,
+  Grid,
   makeStyles,
 } from "@material-ui/core";
 
@@ -18,22 +19,23 @@ const useStyles = makeStyles({
   },
   bookingContainer: {
     position: "absolute",
-    top: "-45px",
+    top: "-40px",
     width: 912,
     border: "1px solid #9f9f9f9f",
     borderRadius: "6px",
     boxShadow: "0 0 10px rgb(0 0 0 / 30%)",
-    height: 90,
+    height: 85,
     backgroundColor: "#fff",
   },
   formControl: {
-    margin: 25,
-    minWidth: 225,
+    margin: "18px 0",
+    minWidth: "100%",
     // height: 40,
   },
   input: {
+    // padding: "5px 5px",
     fontSize: 13,
-    height: 40,
+    height: "auto",
   },
 });
 
@@ -42,60 +44,102 @@ export default function BookingForm() {
   return (
     <section className={classes.root}>
       <Container maxWidth="md" className={classes.bookingContainer}>
-        <FormControl variant="outlined" className={classes.formControl}>
-          <InputLabel id="movie-list" className={classes.input}>
-            Phim
-          </InputLabel>
-          <Select
-            labelId="movie-list"
-            id="movie-list-select-outlined"
-            label="Age"
-            className={classes.input}
-          >
-            <MenuItem value="">
-              <em>None</em>
-            </MenuItem>
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
-          </Select>
-        </FormControl>
-        <FormControl variant="outlined" className={classes.formControl}>
-          <InputLabel id="movie-list" className={classes.input}>
-            Rạp
-          </InputLabel>
-          <Select
-            labelId="movie-list"
-            id="movie-list-select-outlined"
-            label="Age"
-            className={classes.input}
-          >
-            <MenuItem value="">
-              <em>None</em>
-            </MenuItem>
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
-          </Select>
-        </FormControl>
-        <FormControl variant="outlined" className={classes.formControl}>
-          <InputLabel id="movie-list" className={classes.input}>
-            Ngày Chiếu
-          </InputLabel>
-          <Select
-            labelId="movie-list"
-            id="movie-list-select-outlined"
-            label="Age"
-            className={classes.input}
-          >
-            <MenuItem value="">
-              <em>None</em>
-            </MenuItem>
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
-          </Select>
-        </FormControl>
+        <Grid container>
+          <Grid item xs={4}>
+            <div className="form-group">
+              {/* <label for="exampleFormControlSelect1">Phim</label> */}
+              <select
+                className="form-control"
+                id="exampleFormControlSelect1"
+                style={{ margin: "20px auto", width: "98%" }}
+              >
+                <option value="" selected disabled>
+                  Phim
+                </option>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+              </select>
+            </div>
+          </Grid>
+          <Grid item xs={2}>
+            <div className="form-group">
+              {/* <label for="exampleFormControlSelect1">Rạp</label> */}
+              <select
+                className="form-control"
+                id="exampleFormControlSelect1"
+                placeholder="Phim"
+                style={{ margin: "20px auto", width: "95%" }}
+              >
+                <option value="" selected disabled>
+                  Rạp
+                </option>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+              </select>
+            </div>
+          </Grid>
+          <Grid item xs={2}>
+            <div className="form-group">
+              {/* <label for="exampleFormControlSelect1">Ngày Xem</label> */}
+              <select
+                className="form-control"
+                id="exampleFormControlSelect1"
+                placeholder="Phim"
+                style={{ margin: "20px auto", width: "95%" }}
+              >
+                <option value="" selected disabled>
+                  Ngày xem
+                </option>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+              </select>
+            </div>
+          </Grid>
+          <Grid item xs={2}>
+            <div className="form-group">
+              {/* <label for="exampleFormControlSelect1">Xuất chiếu</label> */}
+              <select
+                className="form-control"
+                id="exampleFormControlSelect1"
+                placeholder="Phim"
+                style={{ margin: "20px auto", width: "95%" }}
+              >
+                <option value="" selected disabled>
+                  Xuất chiếu
+                </option>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+              </select>
+            </div>
+          </Grid>
+          <Grid item xs={2}>
+            <button
+              type="button"
+              className="btn"
+              style={{
+                marginTop: "20px",
+                marginLeft: "10px",
+                color: "white",
+                backgroundColor: "#4a4a4a",
+                width: "100%",
+              }}
+            >
+              MUA VÉ NGAY
+            </button>
+          </Grid>
+        </Grid>
       </Container>
     </section>
   );
