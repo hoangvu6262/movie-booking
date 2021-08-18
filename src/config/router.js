@@ -4,7 +4,7 @@ import Booking from "../pages/main/booking";
 import Dashboard from "../pages/admin/dashboard";
 import User from "../pages/admin/user";
 import Movie from "../pages/admin/movie";
-import Login from "../pages/login";
+import LoginPage from "../pages/login";
 export const mainRouter = [
   {
     path: "/",
@@ -20,11 +20,6 @@ export const mainRouter = [
     path: "/booking/:maLichChieu",
     exact: false,
     Component: Booking,
-  },
-  {
-    path: "/login",
-    exact: false,
-    Component: Login,
   },
 ];
 
@@ -50,5 +45,19 @@ export const adminRouter = [
     path: "/admin/movie",
     exact: true,
     Component: Movie,
+  },
+];
+
+/**
+ * Login Router
+ * - login
+ * - signup
+ */
+
+export const loginRouter = [
+  {
+    path: "/login",
+    exact: true,
+    Component: LoginPage,
   },
 ];

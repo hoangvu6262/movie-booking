@@ -6,9 +6,10 @@ import Booking from "./pages/main/booking";
 import Header from "./components/header";
 import "./config/router";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import { mainRouter, adminRouter } from "./config/router";
+import { mainRouter, adminRouter, loginRouter } from "./config/router";
 import RouterMainTemplate from "./templates/main";
 import RouterAdminTemplate from "./templates/admin";
+import RouterLoginTemplate from "./templates/login";
 
 import "./components/font-awesome-icon";
 
@@ -39,6 +40,18 @@ function App() {
     });
   };
 
+  const renderLoginRouter = () => {
+    return loginRouter.map(({ path, exact, Component }) => {
+      return (
+        <RouterLoginTemplate
+          path={path}
+          exact={exact}
+          Component={Component}
+        ></RouterLoginTemplate>
+      );
+    });
+  };
+
   return (
     <>
       {/* khởi tạo router cho dự án */}
@@ -54,6 +67,7 @@ function App() {
           {/* tạo ra đường dẫn url === http://localhost:3000/booking */}
           {renderMainRouter()}
           {renderAdminRouter()}
+          {renderLoginRouter()}
         </Switch>
       </Router>
     </>

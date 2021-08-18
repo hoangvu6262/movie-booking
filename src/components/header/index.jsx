@@ -180,14 +180,16 @@ export default function Header() {
                 </Drawer>
               </Hidden>
               <Hidden mdDown>
-                <IconButton
-                  edge="end"
-                  aria-label="account of current user"
-                  color="default"
-                >
-                  <AccountCircle className={classes.loginIcon} />
-                  {/* <span className={classes.loginText}>Đăng nhập</span> */}
-                </IconButton>
+                <NavLink to="/login">
+                  <IconButton
+                    edge="end"
+                    aria-label="account of current user"
+                    color="default"
+                  >
+                    <AccountCircle className={classes.loginIcon} />
+                    {/* <span className={classes.loginText}>Đăng nhập</span> */}
+                  </IconButton>
+                </NavLink>
               </Hidden>
             </Grid>
           </Grid>
