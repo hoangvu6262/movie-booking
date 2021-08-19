@@ -5,7 +5,6 @@ import { useHistory } from "react-router-dom";
 import {
   makeStyles,
   withStyles,
-  Grid,
   TextField,
   InputAdornment,
   Button,
@@ -94,7 +93,7 @@ export default function LoginForm() {
         })}
         onSubmit={(values) => {
           console.log(values);
-          alert(JSON.stringify(values, null, 2));
+          // alert(JSON.stringify(values, null, 2));
           dispatch(postLogin(values.taiKhoan, values.matKhau, history));
         }}
       >

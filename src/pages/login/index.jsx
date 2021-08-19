@@ -1,7 +1,6 @@
 import React from "react";
 import LoginForm from "./LoginForm";
-import SignupForm from "./SignupForm";
-import Background from "../../assets/images/bg2.jpg";
+
 import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles({

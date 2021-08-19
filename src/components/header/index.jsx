@@ -14,11 +14,17 @@ import {
   ListItemIcon,
   Divider,
   ListItemText,
+  MenuItem,
+  Menu,
   makeStyles,
+  withStyles,
 } from "@material-ui/core";
 
 import MenuIcon from "@material-ui/icons/Menu";
 import AccountCircle from "@material-ui/icons/AccountCircle";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import SupervisorAccountIcon from "@material-ui/icons/SupervisorAccount";
+import EditIcon from "@material-ui/icons/Edit";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -70,19 +76,57 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "flex-end",
     alignContent: "center",
   },
+  loginBtn: {
+    textDecoration: "none",
+    listStyle: "none",
+    color: "#9b9b9b",
+    fontSize: "15px",
+    cursor: "pointer",
+    // fontFamily: "Yanone Kaffeesatz",
+    // letterSpacing: "1px",
+    "& span": {
+      margin: "0 8px",
+      textDecoration: "none",
+    },
+    "&:hover": {
+      textDecoration: "none",
+      listStyle: "none",
+      color: "#9b9b9b",
+    },
+  },
   loginIcon: {
-    height: theme.spacing(4),
-    width: theme.spacing(4),
+    height: 30,
+    width: 30,
   },
   drawer: {
     width: "250px",
   },
 }));
 
+const StyledMenu = withStyles({
+  paper: {
+    border: "1px solid #d3d4d5",
+    marginTop: "5px",
+  },
+})((props) => (
+  <Menu
+    elevation={0}
+    getContentAnchorEl={null}
+    anchorOrigin={{
+      vertical: "bottom",
+      horizontal: "center",
+    }}
+    transformOrigin={{
+      vertical: "top",
+      horizontal: "center",
+    }}
+    {...props}
+  />
+));
+
 export default function Header() {
   const classes = useStyles();
 
-  const [drawerOpen, setDrawerOpen] = React.useState(false);
   // header menu
   const Headermenu = [
     { name: "Lịch chiếu", href: "#movie-list" },
@@ -103,6 +147,7 @@ export default function Header() {
   };
 
   // onClick toggleDrawer()
+  const [drawerOpen, setDrawerOpen] = React.useState(false);
   const toggleDrawer = (open) => (event) => {
     if (
       event &&
@@ -124,9 +169,11 @@ export default function Header() {
     >
       <List>
         {Headermenu.map((menu, value) => (
-          <ListItem button key={value}>
-            <ListItemText primary={menu.name} />
-          </ListItem>
+          <a href={menu.href}>
+            <ListItem button key={value}>
+              <ListItemText primary={menu.name} />
+            </ListItem>
+          </a>
         ))}
       </List>
       <Divider />
@@ -140,6 +187,24 @@ export default function Header() {
       </List>
     </div>
   );
+
+  //lấy userLogin từ localStorage và chuyển về object
+  const userLogin = JSON.parse(localStorage.getItem("userLogin"));
+
+  // menu userLogin
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  // logOut
+  const handleLogOut = () => {
+    localStorage.removeItem("userLogin");
+    setAnchorEl(null);
+  };
 
   return (
     <React.Fragment>
@@ -180,16 +245,46 @@ export default function Header() {
                 </Drawer>
               </Hidden>
               <Hidden mdDown>
-                <NavLink to="/login">
-                  <IconButton
-                    edge="end"
-                    aria-label="account of current user"
-                    color="default"
-                  >
+                {userLogin != undefined ? (
+                  <div>
+                    <a className={classes.loginBtn} onClick={handleClick}>
+                      <AccountCircle className={classes.loginIcon} />
+                      <span>{userLogin.taiKhoan}</span>
+                    </a>
+                    <StyledMenu
+                      id="customized-menu"
+                      anchorEl={anchorEl}
+                      keepMounted
+                      open={Boolean(anchorEl)}
+                      onClose={handleClose}
+                    >
+                      <MenuItem>
+                        <ListItemIcon>
+                          <SupervisorAccountIcon fontSize="small" />
+                        </ListItemIcon>
+                        <ListItemText primary="Thông tin" />
+                      </MenuItem>
+                      <MenuItem>
+                        <ListItemIcon>
+                          <EditIcon fontSize="small" />
+                        </ListItemIcon>
+                        <ListItemText primary="Chỉnh sửa" />
+                      </MenuItem>
+                      <Divider />
+                      <MenuItem onClick={handleLogOut}>
+                        <ListItemIcon>
+                          <ExitToAppIcon fontSize="small" />
+                        </ListItemIcon>
+                        <ListItemText primary="Đăng xuất" />
+                      </MenuItem>
+                    </StyledMenu>
+                  </div>
+                ) : (
+                  <NavLink to="/login" className={classes.loginBtn}>
                     <AccountCircle className={classes.loginIcon} />
-                    {/* <span className={classes.loginText}>Đăng nhập</span> */}
-                  </IconButton>
-                </NavLink>
+                    <span>Đăng nhập</span>
+                  </NavLink>
+                )}
               </Hidden>
             </Grid>
           </Grid>
@@ -198,5 +293,3 @@ export default function Header() {
     </React.Fragment>
   );
 }
-
-// xs={6} sm={3}

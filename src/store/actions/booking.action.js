@@ -1,5 +1,4 @@
 import {
-  GET_BOOKING_LIST,
   GET_BOOKING_LIST_SUCCESS,
   GET_BOOKING_LIST_FAILED,
 } from "../constants/booking.const";

@@ -1,6 +1,5 @@
 import axios from "axios";
 import {
-  GET_CINEMA_SYSTEM_INFO,
   GET_CINEMA_SYSTEM_INFO_SUCCESS,
   GET_CINEMA_SYSTEM_INFO_FAILED,
   GET_CINEMA_SYSTEM_SUCCESS,
@@ -20,7 +19,7 @@ export const getCinemaSystem = () => {
     })
       .then((res) => {
         dispatch(stopLoading());
-        console.log("data", res.data);
+        // console.log("data", res.data);
         // gửi lên store
         dispatch(getCinemaSystemSuccess(res.data));
       })
