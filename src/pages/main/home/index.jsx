@@ -6,7 +6,7 @@ import {
 } from "../../../store/actions/cinema.action";
 import { connect } from "react-redux";
 import { Container, Grid, IconButton, withStyles } from "@material-ui/core";
-import MovieCard from "../../../components/movie-card";
+import MovieCard from "../../../components/movie-card/MovieCard";
 import Carousel from "../../../components/carousel";
 import CinemaTable from "../../../components/cinema-table";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";

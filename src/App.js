@@ -1,11 +1,6 @@
-import logo from "./logo.svg";
 import "./App.css";
-import Home from "./pages/main/home";
-import DetailMovie from "./pages/main/deail-movie";
-import Booking from "./pages/main/booking";
-import Header from "./components/header";
 import "./config/router";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch } from "react-router-dom";
 import { mainRouter, adminRouter, loginRouter } from "./config/router";
 import RouterMainTemplate from "./templates/main";
 import RouterAdminTemplate from "./templates/admin";
@@ -15,7 +10,7 @@ import "./components/font-awesome-icon";
 
 function App() {
   const renderMainRouter = () => {
-    return mainRouter.map(({ path, exact, Component }) => {
+    return mainRouter.map(({ path, exact, Component }, index) => {
       // const { path, exact, Component } = router;
 
       return (
@@ -23,30 +18,33 @@ function App() {
           path={path}
           exact={exact}
           Component={Component}
+          key={index}
         ></RouterMainTemplate>
       );
     });
   };
 
   const renderAdminRouter = () => {
-    return adminRouter.map(({ path, exact, Component }) => {
+    return adminRouter.map(({ path, exact, Component }, index) => {
       return (
         <RouterAdminTemplate
           path={path}
           exact={exact}
           Component={Component}
+          key={index}
         ></RouterAdminTemplate>
       );
     });
   };
 
   const renderLoginRouter = () => {
-    return loginRouter.map(({ path, exact, Component }) => {
+    return loginRouter.map(({ path, exact, Component }, index) => {
       return (
         <RouterLoginTemplate
           path={path}
           exact={exact}
           Component={Component}
+          key={index}
         ></RouterLoginTemplate>
       );
     });

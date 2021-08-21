@@ -6,12 +6,10 @@ import {
   CardMedia,
   CardContent,
   Typography,
-  Button,
-  CardActions,
   withStyles,
 } from "@material-ui/core";
 import Rating from "@material-ui/lab/Rating";
-import ModalPopupVideo from "./modal-popup-video";
+import ModalPopupVideo from "./ModalPopupVideo";
 // import PlayCircleOutlineIcon from "@material-ui/icons/PlayCircleOutline";
 
 const styles = {
@@ -20,6 +18,7 @@ const styles = {
     position: "relative",
   },
   card: {
+    backgroundColor: "transparent",
     width: "215px",
     border: "none",
     boxShadow: "none",
@@ -44,7 +43,7 @@ const styles = {
       marginRight: "10px",
       padding: "4px 13px",
       backgroundColor: "#00ac4d",
-      fontFamily: `'Roboto', sans-serif`,
+      fontFamily: `"Roboto", "Helvetica", "Arial", sans-serif`,
       color: "#fff",
       fontSize: "15px",
       fontWeight: 900,

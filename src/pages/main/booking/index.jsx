@@ -67,6 +67,7 @@ export default function Booking() {
             const danhSachVe = listChair.filter((chair) => {
               return chair.dangChon;
             });
+            console.log(danhSachVe);
             dispatch(postBookingTicket(maLichChieu, danhSachVe));
           }}
         >

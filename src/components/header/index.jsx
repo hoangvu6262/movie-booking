@@ -140,7 +140,7 @@ export default function Header() {
     return Headermenu.map((menu, value) => {
       return (
         <li key={value}>
-          <a href={menu.href}>{menu.name}</a>
+          <a href={`/${menu.href}`}>{menu.name}</a>
         </li>
       );
     });
@@ -169,8 +169,8 @@ export default function Header() {
     >
       <List>
         {Headermenu.map((menu, value) => (
-          <a href={menu.href}>
-            <ListItem button key={value}>
+          <a href={menu.href} key={value}>
+            <ListItem button>
               <ListItemText primary={menu.name} />
             </ListItem>
           </a>
