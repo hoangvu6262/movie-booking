@@ -5,6 +5,8 @@ import {
   GET_MOVIE_LIST,
   GET_MOVIE_LIST_FAILED,
   GET_MOVIE_LIST_SUCCESS,
+  GET_MOVIE_LIST_BY_NAME_SUCCESS,
+  GET_MOVIE_LIST_BY_NAME_FAILED,
 } from "../constants/movie.const";
 import { startLoading, stopLoading } from "./common.action";
 
@@ -81,6 +83,42 @@ const getMoiveDetailSuccess = (movieDetail) => {
 const getMoiveDetailFailed = (err) => {
   return {
     type: GET_MOVIE_DETAIL_FAILED,
+    payload: err,
+  };
+};
+
+// Tìm kiếm phim theo Tên
+export const getMovieListByName = (tenPhim) => {
+  return (dispatch) => {
+    dispatch(startLoading());
+
+    axios({
+      method: "GET",
+      url: `https://movie0706.cybersoft.edu.vn/api/QuanLyPhim/LayDanhSachPhim?maNhom=GP01&tenPhim=${tenPhim}`,
+      data: null,
+    })
+      .then((response) => {
+        dispatch(stopLoading());
+        console.log(response.data);
+        dispatch(getMovieListByNameSuccess(response.data));
+      })
+      .catch((error) => {
+        dispatch(stopLoading());
+        dispatch(getMovieListByNameFailed(error));
+      });
+  };
+};
+
+const getMovieListByNameSuccess = (movieList) => {
+  return {
+    type: GET_MOVIE_LIST_BY_NAME_SUCCESS,
+    payload: movieList,
+  };
+};
+
+const getMovieListByNameFailed = (err) => {
+  return {
+    type: GET_MOVIE_LIST_BY_NAME_FAILED,
     payload: err,
   };
 };

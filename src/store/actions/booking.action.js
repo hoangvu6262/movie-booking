@@ -53,8 +53,8 @@ export const postBookingTicket = (maLichChieu, danhSachVe) => {
       method: "POST",
       url: "https://movie0706.cybersoft.edu.vn/api/QuanLyDatVe/DatVe",
       data: {
-        maLichChieu,
-        danhSachVe,
+        maLichChieu: maLichChieu,
+        danhSachVe: danhSachVe,
         taiKhoanNguoiDung: user.taiKhoan,
       },
       headers: {
@@ -63,11 +63,12 @@ export const postBookingTicket = (maLichChieu, danhSachVe) => {
     })
       .then((res) => {
         dispatch(stopLoading());
-        // console.log(res.data);
+        console.log(res.data);
         alert("Đặt vé thành công!");
       })
       .catch((err) => {
         dispatch(stopLoading());
+        console.log(err);
         alert("Đặt vé thất bại!");
       });
   };

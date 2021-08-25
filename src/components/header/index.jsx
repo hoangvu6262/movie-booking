@@ -212,11 +212,13 @@ export default function Header() {
         <Toolbar>
           <Grid container>
             <Grid item lg={3} xs={6}>
-              <Avatar
-                variant="square"
-                src={weblogo}
-                className={classes.logo}
-              ></Avatar>
+              <NavLink to="/">
+                <Avatar
+                  variant="square"
+                  src={weblogo}
+                  className={classes.logo}
+                ></Avatar>
+              </NavLink>
             </Grid>
             <Hidden mdDown>
               <Grid item lg={6} className={classes.menu}>

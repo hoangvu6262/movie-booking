@@ -48,42 +48,6 @@ const styles = {
     fontWeight: "400",
     color: "#fb4226",
   },
-  tableInfo: {
-    marginTop: 30,
-    color: "#fff",
-    // width: "100%",
-    // height: "100%",
-    "& tr": {
-      height: 60,
-      "& th": {
-        fontSize: 15,
-        width: "30%",
-      },
-      "& td": {
-        paddingLeft: 20,
-        fontSize: 14,
-      },
-    },
-  },
-  tableContent: {
-    marginTop: 30,
-    color: "#fff",
-    // width: "100%",
-    // height: "100%",
-    "& tr": {
-      height: 60,
-      "& th": {
-        paddingLeft: 20,
-        fontSize: 15,
-        width: "30%",
-      },
-      "& td": {
-        paddingLeft: 20,
-        fontSize: 14,
-        textAlign: "justify",
-      },
-    },
-  },
 };
 
 class DetailMovie extends Component {
@@ -131,7 +95,7 @@ class DetailMovie extends Component {
             </Container>
             <Container maxWidth="md">
               <Grid
-                Container
+                container
                 style={{
                   display: "flex",
                   flexDirection: "row",
@@ -140,8 +104,8 @@ class DetailMovie extends Component {
               >
                 <Grid item md={6}>
                   <table
-                    class="table table-borderless"
-                    className={classes.tableInfo}
+                    className="table table-borderless"
+                    style={{ marginTop: 35, color: "#fff" }}
                   >
                     <thead>
                       <tr>
@@ -177,8 +141,8 @@ class DetailMovie extends Component {
                 </Grid>
                 <Grid item md={6}>
                   <table
-                    class="table table-borderless"
-                    className={classes.tableContent}
+                    className="table table-borderless"
+                    style={{ marginTop: 35, color: "#fff" }}
                   >
                     <thead>
                       <tr>

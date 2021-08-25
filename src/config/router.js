@@ -5,6 +5,7 @@ import Dashboard from "../pages/admin/dashboard";
 import User from "../pages/admin/user";
 import Movie from "../pages/admin/movie";
 import LoginPage from "../pages/login";
+import SearchMovie from "../pages/main/search/SearchMovie";
 export const mainRouter = [
   {
     path: "/",
@@ -20,6 +21,11 @@ export const mainRouter = [
     path: "/booking/:maLichChieu",
     exact: false,
     Component: Booking,
+  },
+  {
+    path: "/search/:tenPhim",
+    exact: false,
+    Component: SearchMovie,
   },
 ];
 

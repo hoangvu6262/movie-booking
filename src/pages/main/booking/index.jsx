@@ -1,79 +1,47 @@
-// trong fc ko có life circle
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  getBookingList,
-  postBookingTicket,
-} from "../../../store/actions/booking.action";
-import { useParams } from "react-router-dom";
+import React from "react";
+import StepperBooking from "../../../components/stepper";
+import ChooseSeat from "./chooseSeats/ChooseSeats";
+import ChoosePayment from "./choosePayment/ChoosePayment";
+import Payment from "./payment/Payment";
+import "./style.scss";
+import { useSelector } from "react-redux";
 
 export default function Booking() {
-  const dispatch = useDispatch();
-  const { listChair } = useSelector((state) => state.booking);
-  console.log(listChair);
-  // lấy maLichChieu từ url xuống
-  const { maLichChieu } = useParams();
+  const steps = [
+    {
+      name: "Chọn ghế ngồi",
+      Component: ChooseSeat,
+    },
+    {
+      name: "chọn phương thức thanh toán",
+      Component: ChoosePayment,
+    },
+    {
+      name: "Kiểm tra và thanh toán",
+      Component: Payment,
+    },
+  ];
 
-  // tương đương với componentDidMount
-  useEffect(() => {
-    //dispatch action call api
-    dispatch(getBookingList(maLichChieu));
-  }, []);
+  const { listChair, movieInfo } = useSelector((state) => state.booking);
+  const danhSachVe = listChair.filter((chair) => {
+    return chair.dangChon;
+  });
 
-  const setClassNameChair = (daDat, dangChon) => {
-    if (daDat) {
-      return "btn-danger  ";
-    } else {
-      if (dangChon) {
-        return "btn-warning ";
-      } else {
-        return "btn-info ";
-      }
-    }
-  };
-
-  const renderListChair = () => {
-    if (listChair) {
-      return listChair.map((chair, index) => {
-        return (
-          <button
-            className={
-              setClassNameChair(chair.daDat, chair.dangChon) + "btn m-2"
-            }
-            key={index}
-            onClick={() => {
-              console.log(chair);
-              dispatch({
-                type: "DANG_CHON",
-                payload: chair,
-              });
-            }}
-          >
-            {chair.tenGhe}
-          </button>
-        );
-      });
-    }
-  };
-
+  const dsVe = [];
+  danhSachVe.map((item) => {
+    dsVe.push({ maGhe: item.maGhe, giaVe: item.giaVe });
+  });
+  console.log("listDangChon", dsVe);
   return (
-    <div>
-      <h2>Booking</h2>
-      <section className="listChair">{renderListChair()}</section>
-      <div className="dat-ve">
-        <button
-          className="btn btn-success"
-          onClick={() => {
-            const danhSachVe = listChair.filter((chair) => {
-              return chair.dangChon;
-            });
-            console.log(danhSachVe);
-            dispatch(postBookingTicket(maLichChieu, danhSachVe));
-          }}
-        >
-          Đặt vé
-        </button>
-      </div>
+    <div className="booking-page">
+      {/* <div>
+        <p>{movieInfo.tenPhim}</p>
+      </div> */}
+      <StepperBooking
+        stepper={steps}
+        next={dsVe}
+        maLichChieu={movieInfo.maLichChieu}
+      />
     </div>
   );
 }
