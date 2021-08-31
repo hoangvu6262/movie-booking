@@ -97,35 +97,40 @@ export default function BookingForm() {
               >
                 Tìm kiếm
               </Button> */}
-
-              <FormControl
-                // className={clsx(classes.margin, classes.textField)}
-                variant="outlined"
-                className={classes.margin}
-              >
-                <InputLabel htmlFor="search">Tìm kiếm phim</InputLabel>
-                <OutlinedInput
-                  id="search"
-                  name="search"
-                  type="text"
-                  value={formik.values.search}
-                  onChange={formik.handleChange}
-                  error={formik.touched.search && Boolean(formik.errors.search)}
-                  helperText={formik.touched.search && formik.errors.search}
-                  endAdornment={
-                    <InputAdornment position="end">
-                      <IconButton
-                        aria-label="toggle password visibility"
-                        onClick={formik.handleSubmit}
-                        edge="end"
-                      >
-                        <SearchIcon />
-                      </IconButton>
-                    </InputAdornment>
-                  }
-                  labelWidth={105}
-                />
-              </FormControl>
+              <Grid container>
+                <Grid item>
+                  <FormControl
+                    // className={clsx(classes.margin, classes.textField)}
+                    variant="outlined"
+                    className={classes.margin}
+                  >
+                    <InputLabel htmlFor="search">Tìm kiếm phim</InputLabel>
+                    <OutlinedInput
+                      id="search"
+                      name="search"
+                      type="text"
+                      value={formik.values.search}
+                      onChange={formik.handleChange}
+                      error={
+                        formik.touched.search && Boolean(formik.errors.search)
+                      }
+                      helperText={formik.touched.search && formik.errors.search}
+                      endAdornment={
+                        <InputAdornment position="end">
+                          <IconButton
+                            aria-label="toggle password visibility"
+                            onClick={formik.handleSubmit}
+                            edge="end"
+                          >
+                            <SearchIcon />
+                          </IconButton>
+                        </InputAdornment>
+                      }
+                      labelWidth={105}
+                    />
+                  </FormControl>
+                </Grid>
+              </Grid>
             </form>
           )}
         </Formik>

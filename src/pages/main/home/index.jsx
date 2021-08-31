@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { getMoiveList } from "../../../store/actions/movie.action";
+import { getMoiveListPagination } from "../../../store/actions/movie.action";
 import {
   getCinemaSystemInfo,
   getCinemaSystem,
@@ -68,7 +68,7 @@ class Home extends Component {
   // render list movie đang chiếu hoặc sắp chiếu
   renderLichChieu = (classes) => {
     if (this.state.dangChieu === true) {
-      return this.props.movieList.map((movie, index) => {
+      return this.props.movieListPanigations.map((movie, index) => {
         return (
           <Grid className={classes.cardItem} item lg={3} key={index}>
             <MovieCard movie={movie} />
@@ -118,7 +118,7 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    this.props.dispatch(getMoiveList());
+    this.props.dispatch(getMoiveListPagination(1, 8));
     this.props.dispatch(getCinemaSystem());
   }
 }
@@ -126,7 +126,7 @@ class Home extends Component {
 const mapStateToProps = (state) => {
   console.log(state);
   return {
-    movieList: state.movie.movieList,
+    movieListPanigations: state.movie.movieListPanigations,
     loading: state.common.loading,
     cinema: state.cinema.cinemaList,
     // cinemaInfoList: state.cinema.cinemaInfo,

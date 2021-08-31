@@ -33,7 +33,7 @@ const styles = {
   },
   movieTitle: {
     marginTop: 5,
-    height: 42,
+    height: 46,
     width: "100%",
     fontSize: 18,
     fontWeight: "600",

@@ -127,7 +127,7 @@ class MovieCardHorizontal extends Component {
       <div className={classes.root}>
         <Card className={classes.card}>
           <Grid container>
-            <Grid item md={3}>
+            <Grid item md={3} xs={12}>
               <CardActionArea className={classes.cardActionArea}>
                 <CardMedia
                   className={classes.media}
@@ -136,8 +136,16 @@ class MovieCardHorizontal extends Component {
                 />
               </CardActionArea>
             </Grid>
-            <Grid item md={6} className={classes.cardContent}>
+            <Grid item md={6} xs={12} className={classes.cardContent}>
               <CardContent>
+                <Typography
+                  variant="body2"
+                  color="textSecondary"
+                  component="p"
+                  className={classes.movieTime}
+                >
+                  {movie.ngayKhoiChieu}
+                </Typography>
                 <Typography
                   variant="body2"
                   color="textSecondary"
@@ -147,18 +155,9 @@ class MovieCardHorizontal extends Component {
                   <span>P</span>
                   {movie.tenPhim}
                 </Typography>
-
-                <Typography
-                  variant="body2"
-                  color="textSecondary"
-                  component="p"
-                  className={classes.movieTime}
-                >
-                  {movie.ngayKhoiChieu}
-                </Typography>
               </CardContent>
             </Grid>
-            <Grid item md={3} className={classes.cardContent}>
+            <Grid item md={3} xs={12} className={classes.cardContent}>
               <div className={classes.rating}>
                 <Typography
                   variant="caption"

@@ -1,15 +1,13 @@
-import React, { Component } from "react";
+import React, { useEffect } from "react";
+import { getMoiveListPagination } from "../../../store/actions/movie.action";
+import { useSelector, useDispatch } from "react-redux";
+import { makeStyles } from "@material-ui/styles";
 
-export default class User extends Component {
-  render() {
-    return (
-      <div className="user">
-        <div className="container-fluid">
-          <div className="col-10">
-            <h2>User</h2>
-          </div>
-        </div>
-      </div>
-    );
-  }
+export default function User() {
+  const dispatch = useDispatch();
+  const { movieListPanigations } = useSelector((state) => state.movie);
+  useEffect(() => {
+    dispatch(getMoiveListPagination());
+  }, []);
+  return <div>User admin</div>;
 }

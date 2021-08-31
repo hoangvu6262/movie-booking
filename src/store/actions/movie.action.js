@@ -7,6 +7,8 @@ import {
   GET_MOVIE_LIST_SUCCESS,
   GET_MOVIE_LIST_BY_NAME_SUCCESS,
   GET_MOVIE_LIST_BY_NAME_FAILED,
+  GET_MOVIE_LIST_PANIGATION_SUCCESS,
+  GET_MOVIE_LIST_PANIGATION_FAILED,
 } from "../constants/movie.const";
 import { startLoading, stopLoading } from "./common.action";
 
@@ -17,7 +19,7 @@ export const getMoiveList = () => {
     // call api
     axios({
       method: "GET",
-      url: "https://movie0706.cybersoft.edu.vn/api/QuanLyPhim/LayDanhSachPhimPhanTrang?maNhom=GP01&soTrang=1&soPhanTuTrenTrang=8",
+      url: "https://movie0706.cybersoft.edu.vn/api/QuanLyPhim/LayDanhSachPhim?maNhom=GP01",
       data: null,
     })
       .then((res) => {
@@ -44,6 +46,44 @@ const getMoiveListSuccess = (movieList) => {
 const getMoiveListFailed = (err) => {
   return {
     type: GET_MOVIE_LIST_FAILED,
+    payload: err,
+  };
+};
+
+// lấy danh sách phim phân trang
+export const getMoiveListPagination = (page, numberOfPages) => {
+  return (dispatch) => {
+    dispatch(startLoading());
+    // call api
+    axios({
+      method: "GET",
+      url: `https://movie0706.cybersoft.edu.vn/api/QuanLyPhim/LayDanhSachPhimPhanTrang?maNhom=GP01&soTrang=${page}&soPhanTuTrenTrang=${numberOfPages}`,
+      data: null,
+    })
+      .then((res) => {
+        dispatch(stopLoading());
+        console.log(res.data);
+        // gửi lên store
+        dispatch(getMoiveListPaginationSuccess(res.data));
+      })
+      .catch((err) => {
+        dispatch(stopLoading());
+        // gửi lên store
+        dispatch(getMoiveListPaginationFailed(err));
+      });
+  };
+};
+
+const getMoiveListPaginationSuccess = (movieList) => {
+  return {
+    type: GET_MOVIE_LIST_PANIGATION_SUCCESS,
+    payload: movieList,
+  };
+};
+
+const getMoiveListPaginationFailed = (err) => {
+  return {
+    type: GET_MOVIE_LIST_PANIGATION_FAILED,
     payload: err,
   };
 };
@@ -120,5 +160,29 @@ const getMovieListByNameFailed = (err) => {
   return {
     type: GET_MOVIE_LIST_BY_NAME_FAILED,
     payload: err,
+  };
+};
+
+//Xóa Phim
+export const deleteMovie = (maPhim) => {
+  return (dispatch) => {
+    const userAdmin = JSON.parse(localStorage.getItem("userLogin"));
+    const token = userAdmin.accessToken;
+    const headers = {
+      Authorization: `Bearer ${token}`,
+    };
+    axios
+      .delete(
+        `https://movie0706.cybersoft.edu.vn/api/QuanLyPhim/XoaPhim?MaPhim=${maPhim}`,
+        { headers }
+      )
+      .then((response) => {
+        alert("đã xóa thành công");
+        dispatch(startLoading());
+        dispatch(stopLoading());
+      })
+      .catch((err) => {
+        alert("xóa không thành công");
+      });
   };
 };
