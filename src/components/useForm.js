@@ -1,37 +1,6 @@
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core";
 
-export function useForm(initialFValues) {
-  const [giaTri, setGiaTri] = useState(initialFValues);
-  const [errors, setErrors] = useState({});
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    const newMovie = {
-      ...giaTri,
-      [name]: value,
-    };
-    console.log(newMovie);
-    setGiaTri(newMovie);
-    // if (validateOnChange)
-    //     validate({ [name]: value })
-  };
-
-  const resetForm = () => {
-    setGiaTri(initialFValues);
-    setErrors({});
-  };
-
-  return {
-    giaTri,
-    setGiaTri,
-    errors,
-    setErrors,
-    handleInputChange,
-    resetForm,
-  };
-}
-
 const useStyles = makeStyles((theme) => ({
   root: {
     "& .MuiFormControl-root": {
@@ -46,7 +15,7 @@ export function Form(props) {
   const { children, ...other } = props;
   return (
     <form
-      //   onSubmit={onSubmit}
+      // onSubmit={formik.handleSubmit}
       className={classes.root}
       autoComplete="off"
       {...other}

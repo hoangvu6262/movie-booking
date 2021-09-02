@@ -9,6 +9,10 @@ import {
   GET_MOVIE_LIST_BY_NAME_FAILED,
   GET_MOVIE_LIST_PANIGATION_SUCCESS,
   GET_MOVIE_LIST_PANIGATION_FAILED,
+  ADD_MOVIE_SUCCESS,
+  ADD_MOVIE_FAILED,
+  DELETE_MOVIE_SUCCESS,
+  DELETE_MOVIE_FAILED,
 } from "../constants/movie.const";
 import { startLoading, stopLoading } from "./common.action";
 
@@ -144,6 +148,7 @@ export const getMovieListByName = (tenPhim) => {
       })
       .catch((error) => {
         dispatch(stopLoading());
+        console.log("error", error);
         dispatch(getMovieListByNameFailed(error));
       });
   };
@@ -177,12 +182,101 @@ export const deleteMovie = (maPhim) => {
         { headers }
       )
       .then((response) => {
-        alert("đã xóa thành công");
-        dispatch(startLoading());
-        dispatch(stopLoading());
+        // console.log("xoa phim thanh cong");
+        // console.log(response);
+        const notification = {
+          open: true,
+          status: response.status,
+          severity: "success",
+          message: "Đã xóa phim thành công!",
+        };
+        // alert("đã xóa thành công");
+        dispatch(deleteMovieSuccess(notification));
       })
       .catch((err) => {
-        alert("xóa không thành công");
+        // console.log("xoa phim ko thanh cong", err.response.data);
+        const notification = {
+          open: true,
+          status: err.response.status,
+          severity: "error",
+          message: "Xóa phim không thành công!",
+        };
+        dispatch(deleteMovieFailed(notification));
       });
   };
+};
+
+const deleteMovieSuccess = (data) => {
+  const action = {
+    type: DELETE_MOVIE_SUCCESS,
+    payload: data,
+  };
+
+  return action;
+};
+
+const deleteMovieFailed = (err) => {
+  const action = {
+    type: DELETE_MOVIE_FAILED,
+    payload: err,
+  };
+
+  return action;
+};
+
+//Thêm Phim
+export const addMovie = (movie) => {
+  return (dispatch) => {
+    const userAdmin = JSON.parse(localStorage.getItem("userLogin"));
+    const token = userAdmin.accessToken;
+    const headers = {
+      Authorization: `Bearer ${token}`,
+    };
+    axios
+      .post(
+        "https://movie0706.cybersoft.edu.vn/api/QuanLyPhim/ThemPhim",
+        movie,
+        { headers }
+      )
+      .then((response) => {
+        // console.log("them phim thanh cong");
+        // console.log(response);
+        const notification = {
+          open: true,
+          status: response.status,
+          severity: "success",
+          message: "Thêm phim thành công!",
+          data: movie,
+        };
+        dispatch(addMovieSuccess(notification));
+      })
+      .catch((error) => {
+        // console.log(error.response);
+        const notification = {
+          open: true,
+          status: error.response.status,
+          severity: "error",
+          message: error.response.data,
+        };
+        dispatch(addMovieFailed(notification));
+      });
+  };
+};
+
+const addMovieSuccess = (data) => {
+  const action = {
+    type: ADD_MOVIE_SUCCESS,
+    payload: data,
+  };
+
+  return action;
+};
+
+const addMovieFailed = (err) => {
+  const action = {
+    type: ADD_MOVIE_FAILED,
+    payload: err,
+  };
+
+  return action;
 };

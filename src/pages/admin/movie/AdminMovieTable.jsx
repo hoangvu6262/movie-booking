@@ -1,9 +1,5 @@
-import React, { useEffect } from "react";
-import {
-  getMoiveListPagination,
-  getMoiveList,
-} from "../../../store/actions/movie.action";
-import { useSelector, useDispatch } from "react-redux";
+import React from "react";
+import { useDispatch } from "react-redux";
 import {
   makeStyles,
   withStyles,
@@ -75,12 +71,13 @@ export default function AdminMovieTable(props) {
   const handleDeleteClick = (maPhim) => {
     dispatch(deleteMovie(maPhim));
   };
+
   const renderAdminMovieList = () => {
     return movieList.map((movie, index) => {
       return (
         <StyledTableRow key={index}>
           <StyledTableCell component="th" scope="row">
-            {index + 1}
+            {movie.danhGia}
           </StyledTableCell>
           <StyledTableCell align="left">{movie.maPhim}</StyledTableCell>
           <StyledTableCell align="left">{movie.tenPhim}</StyledTableCell>
@@ -121,7 +118,7 @@ export default function AdminMovieTable(props) {
           <Table className={classes.table} aria-label="customized table">
             <TableHead>
               <TableRow>
-                <StyledTableCell align="left">STT</StyledTableCell>
+                <StyledTableCell align="left">Đánh giá</StyledTableCell>
                 <StyledTableCell align="left">Code</StyledTableCell>
                 <StyledTableCell align="left">Tên Phim</StyledTableCell>
                 <StyledTableCell align="left">Trailer</StyledTableCell>

@@ -8,11 +8,13 @@ import AdminMovieTable from "./AdminMovieTable";
 import { Paper, makeStyles } from "@material-ui/core";
 import Pagination from "@material-ui/lab/Pagination";
 import AdminMovieForm from "./AdminMovieForm";
+import Notification from "../../../components/notification";
 
 const useStyles = makeStyles({
   adminMoviePaper: {
     padding: 15,
     margin: "20px 0",
+    height: "100%",
   },
   pagination: {
     margin: "20px auto",
@@ -22,13 +24,16 @@ const useStyles = makeStyles({
 export default function Movie() {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const { movieListPanigations, movieList, totalPage } = useSelector(
+  const { movieListPanigations, movieList, totalPage, notify } = useSelector(
     (state) => state.movie
   );
 
-  const loading = useSelector((state) => state.common.loading);
-  // const { items } = movieListPanigations;
-  console.log(totalPage, movieListPanigations);
+  const handleCloseNotification = () => {
+    dispatch({
+      type: "CLOSE_NOTIFICATION",
+      payload: false,
+    });
+  };
   useEffect(() => {
     dispatch(getMoiveListPagination(1, 10));
     // dispatch(getMoiveList());
@@ -53,6 +58,11 @@ export default function Movie() {
           onChange={handleChange}
         />
       ) : null}
+
+      <Notification
+        notifyAlert={notify}
+        onClose={handleCloseNotification}
+      ></Notification>
     </div>
   );
 }

@@ -1,10 +1,12 @@
 import React from "react";
-import { useForm, Form } from "../../../components/useForm";
+import { Form } from "../../../components/useForm";
 import { Formik } from "formik";
 import * as yup from "yup";
 import Controls from "../../../components/controls/Controls";
 import { Grid } from "@material-ui/core";
 import dateFormat from "date-format";
+import { addMovie } from "../../../store/actions/movie.action";
+import { useDispatch } from "react-redux";
 
 const initialValues = {
   tenPhim: "",
@@ -15,41 +17,51 @@ const initialValues = {
   ngayKhoiChieu: "",
   danhGia: 0,
 };
+
+const validationForm = yup.object({
+  tenPhim: yup
+    .string("Điền tên phim.")
+    .required("Vui lòng phải điển tên Phim."),
+  trailer: yup
+    .string("Thêm trailer của Phim.")
+    .required("Vui lòng phải thêm trailer cho phim."),
+  hinhAnh: yup
+    .string("Thêm hình ảnh cho phim.")
+    .required("Vui lòng phải thêm hình ảnh cho phim."),
+  ngayKhoiChieu: yup.date().required("Vui lòng nhập Ngày khởi chiếu."),
+  danhGia: yup
+    .number("Bạn phải nhập số.")
+    .typeError("Dữ liệu đầu vào phải là kiểu số.")
+    .required("Vui lòng nhập đánh giá cho phim.")
+    .min(0, "Dữ liệu vào phải lớn hơn hoặc bằng 0.")
+    .max(10, "Dữ liệu vào phải nhỏ hơn hoặc bằng 10."), // Đánh giá chỉ từ 0-10
+  moTa: yup.string().required("Bạn phải nhập mô tả cho phim."),
+});
+
 export default function AdminMovieForm() {
+  const dispatch = useDispatch();
+
+  const handleSubmitForm = (values) => {
+    const convertDateFormat = dateFormat(
+      "dd/MM/yyyy",
+      new Date(values.ngayKhoiChieu)
+    );
+    const newValues = { ...values, ngayKhoiChieu: convertDateFormat };
+    console.log(newValues);
+    dispatch(addMovie(newValues));
+  };
+
   return (
-    <Formik
-      initialValues={initialValues}
-      validationSchema={yup.object({
-        tenPhim: yup
-          .string("Điền tên phim.")
-          .required("Vui lòng phải điển tên Phim."),
-        trailer: yup
-          .string("Thêm trailer của Phim.")
-          .required("Vui lòng phải thêm trailer cho phim."),
-        hinhAnh: yup
-          .string("Thêm hình ảnh cho phim.")
-          .required("Vui lòng phải thêm hình ảnh cho phim."),
-        ngayKhoiChieu: yup.date().required("Vui lòng nhập Ngày khởi chiếu."),
-        danhGia: yup
-          .number("Bạn phải nhập số.")
-          .typeError("Dữ liệu đầu vào phải là kiểu số.")
-          .required("Vui lòng nhập đánh giá cho phim.")
-          .min(0, "Dữ liệu vào phải lớn hơn hoặc bằng 0.")
-          .max(10, "Dữ liệu vào phải nhỏ hơn hoặc bằng 10."),
-        moTa: yup.string().required("Bạn phải nhập mô tả cho phim."),
-      })}
-      onSubmit={(values) => {
-        const convertDateFormat = dateFormat(
-          "dd/MM/yyyy",
-          new Date(values.ngayKhoiChieu)
-        );
-        const newValues = { ...values, ngayKhoiChieu: convertDateFormat };
-        console.log(newValues);
-        alert(JSON.stringify(newValues, null, 2));
-      }}
-    >
-      {(formik) => {
-        return (
+    <>
+      <Formik
+        initialValues={initialValues}
+        validationSchema={validationForm}
+        onSubmit={(values, { resetForm }) => {
+          handleSubmitForm(values);
+          resetForm();
+        }}
+      >
+        {(formik) => (
           <Form onSubmit={formik.handleSubmit}>
             <Grid container>
               <Grid item lg={6} xs={12}>
@@ -115,7 +127,7 @@ export default function AdminMovieForm() {
                   }
                   helperText={formik.touched.danhGia && formik.errors.danhGia}
                 />
-                <Controls.Input
+                <Controls.TextArea
                   id="moTa"
                   name="moTa"
                   label="Mô tả"
@@ -128,7 +140,6 @@ export default function AdminMovieForm() {
                 />
               </Grid>
             </Grid>
-            {/* <img src="https://thuthuatnhanh.com/wp-content/uploads/2019/11/hinh-nen-dien-thoai-dep.jpg" /> */}
             <Controls.Button
               color="primary"
               variant="outlined"
@@ -137,8 +148,8 @@ export default function AdminMovieForm() {
               type="submit"
             />
           </Form>
-        );
-      }}
-    </Formik>
+        )}
+      </Formik>
+    </>
   );
 }
