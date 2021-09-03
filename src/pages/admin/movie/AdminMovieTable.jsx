@@ -15,7 +15,10 @@ import {
 // import { DataGrid } from "@material-ui/data-grid";
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteForeverOutlinedIcon from "@material-ui/icons/DeleteForeverOutlined";
-import { deleteMovie } from "../../../store/actions/movie.action";
+import {
+  deleteMovie,
+  getMoiveDetail,
+} from "../../../store/actions/movie.action";
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -64,12 +67,22 @@ const useStyles = makeStyles((theme) => ({
 export default function AdminMovieTable(props) {
   const classes = useStyles();
 
-  const { movieList } = props;
+  const { movieList, openDialog, setOpenDialog } = props;
 
   const dispatch = useDispatch();
 
   const handleDeleteClick = (maPhim) => {
     dispatch(deleteMovie(maPhim));
+  };
+
+  const handleClickEdit = (movie) => {
+    // dispatch(getMoiveDetail(maPhim));
+    setOpenDialog({
+      open: true,
+      isAddMovie: false,
+      title: "Thay đổi thông tin phim",
+      movie: movie,
+    });
   };
 
   const renderAdminMovieList = () => {
@@ -93,7 +106,7 @@ export default function AdminMovieTable(props) {
           {/* <TableCell align="right">{movie.moTa}</TableCell> */}
           <StyledTableCell align="left">{movie.ngayKhoiChieu}</StyledTableCell>
           <StyledTableCell align="left">
-            <IconButton>
+            <IconButton onClick={() => handleClickEdit(movie)}>
               <EditIcon color="primary" />
             </IconButton>
           </StyledTableCell>

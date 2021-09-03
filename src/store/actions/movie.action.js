@@ -2,7 +2,6 @@ import axios from "axios";
 import {
   GET_MOVIE_DETAIL_FAILED,
   GET_MOVIE_DETAIL_SUCCESS,
-  GET_MOVIE_LIST,
   GET_MOVIE_LIST_FAILED,
   GET_MOVIE_LIST_SUCCESS,
   GET_MOVIE_LIST_BY_NAME_SUCCESS,
@@ -13,10 +12,12 @@ import {
   ADD_MOVIE_FAILED,
   DELETE_MOVIE_SUCCESS,
   DELETE_MOVIE_FAILED,
+  EDIT_MOVIE_SUCCESS,
+  EDIT_MOVIE_FAILED,
 } from "../constants/movie.const";
 import { startLoading, stopLoading } from "./common.action";
 
-// action call api
+// action call api lấy danh sách phim
 export const getMoiveList = () => {
   return (dispatch) => {
     dispatch(startLoading());
@@ -92,8 +93,7 @@ const getMoiveListPaginationFailed = (err) => {
   };
 };
 
-// get detail
-
+// get detail movie
 export const getMoiveDetail = (movieCode) => {
   return (dispatch) => {
     dispatch(startLoading());
@@ -279,4 +279,48 @@ const addMovieFailed = (err) => {
   };
 
   return action;
+};
+
+export const editMovieDetail = (movie) => {
+  return (dispatch) => {
+    const userAdmin = JSON.parse(localStorage.getItem("userLogin"));
+    const token = userAdmin.accessToken;
+    const headers = {
+      Authorization: `Bearer ${token}`,
+    };
+    axios
+      .post(
+        "https://movie0706.cybersoft.edu.vn/api/QuanLyPhim/CapNhatPhim",
+        movie,
+        { headers }
+      )
+      .then((response) => {
+        // console.log("them phim thanh cong");
+        // console.log(response);
+        const notification = {
+          open: true,
+          status: response.status,
+          severity: "success",
+          message: "Cập nhật thông tin phim thành công!",
+          data: movie,
+        };
+        dispatch({
+          type: EDIT_MOVIE_SUCCESS,
+          payload: notification,
+        });
+      })
+      .catch((error) => {
+        // console.log(error.response);
+        const notification = {
+          open: true,
+          status: error.response.status,
+          severity: "error",
+          message: error.response.data,
+        };
+        dispatch({
+          type: EDIT_MOVIE_FAILED,
+          payload: notification,
+        });
+      });
+  };
 };

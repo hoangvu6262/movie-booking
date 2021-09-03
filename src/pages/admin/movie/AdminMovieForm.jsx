@@ -1,22 +1,20 @@
 import React from "react";
-import { Form } from "../../../components/useForm";
-import { Formik } from "formik";
 import * as yup from "yup";
-import Controls from "../../../components/controls/Controls";
-import { Grid } from "@material-ui/core";
 import dateFormat from "date-format";
-import { addMovie } from "../../../store/actions/movie.action";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { Grid, makeStyles } from "@material-ui/core";
+import { addMovie, editMovieDetail } from "../../../store/actions/movie.action";
+import { Form } from "../../../components/useForm";
+import Controls from "../../../components/controls/Controls";
 
-const initialValues = {
-  tenPhim: "",
-  trailer: "",
-  hinhAnh: "",
-  moTa: "",
-  maNhom: "GP01",
-  ngayKhoiChieu: "",
-  danhGia: 0,
-};
+const useStyles = makeStyles((theme) => ({
+  root: {
+    "& .MuiFormControl-root": {
+      width: "90%",
+      margin: theme.spacing(1),
+    },
+  },
+}));
 
 const validationForm = yup.object({
   tenPhim: yup
@@ -38,8 +36,11 @@ const validationForm = yup.object({
   moTa: yup.string().required("Bạn phải nhập mô tả cho phim."),
 });
 
-export default function AdminMovieForm() {
+export default function AdminMovieForm(props) {
+  const { openDialog, setOpenDialog } = props;
+  const classes = useStyles();
   const dispatch = useDispatch();
+  // const { page } = useSelector((state) => state.movie);
 
   const handleSubmitForm = (values) => {
     const convertDateFormat = dateFormat(
@@ -48,21 +49,34 @@ export default function AdminMovieForm() {
     );
     const newValues = { ...values, ngayKhoiChieu: convertDateFormat };
     console.log(newValues);
-    dispatch(addMovie(newValues));
+    if (openDialog.isAddMovie) {
+      dispatch(addMovie(newValues));
+      setOpenDialog({
+        ...openDialog,
+        open: false,
+      });
+    } else {
+      dispatch(editMovieDetail(newValues));
+      setOpenDialog({
+        ...openDialog,
+        open: false,
+      });
+    }
   };
 
   return (
     <>
-      <Formik
-        initialValues={initialValues}
+      <Form
+        initialValues={openDialog.movie}
         validationSchema={validationForm}
-        onSubmit={(values, { resetForm }) => {
-          handleSubmitForm(values);
-          resetForm();
-        }}
+        onSubmit={handleSubmitForm}
       >
         {(formik) => (
-          <Form onSubmit={formik.handleSubmit}>
+          <form
+            onSubmit={formik.handleSubmit}
+            className={classes.root}
+            autoComplete="off"
+          >
             <Grid container>
               <Grid item lg={6} xs={12}>
                 <Controls.Input
@@ -105,7 +119,10 @@ export default function AdminMovieForm() {
                   name="ngayKhoiChieu"
                   label="Ngày Khởi Chiếu"
                   onChange={formik.handleChange}
-                  value={formik.values.ngayKhoiChieu}
+                  value={dateFormat(
+                    "yyyy-MM-dd",
+                    new Date(formik.values.ngayKhoiChieu)
+                  )}
                   error={
                     formik.touched.ngayKhoiChieu &&
                     Boolean(formik.errors.ngayKhoiChieu)
@@ -147,9 +164,9 @@ export default function AdminMovieForm() {
               onClick={formik.handleSubmit}
               type="submit"
             />
-          </Form>
+          </form>
         )}
-      </Formik>
+      </Form>
     </>
   );
 }

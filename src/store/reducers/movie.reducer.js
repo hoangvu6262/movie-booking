@@ -11,21 +11,19 @@ import {
   ADD_MOVIE_FAILED,
   DELETE_MOVIE_SUCCESS,
   DELETE_MOVIE_FAILED,
+  EDIT_MOVIE_SUCCESS,
+  EDIT_MOVIE_FAILED,
 } from "../constants/movie.const";
 
 const initialState = {
   movieListPanigations: [],
   totalPage: 0,
+  page: 0,
   movieList: [],
   movieDetail: {},
   searchList: [],
   errors: {},
-  notify: {
-    open: false,
-    status: 0,
-    severity: "",
-    message: "",
-  },
+  notify: {},
 };
 
 const movieReducer = (state = initialState, action) => {
@@ -42,6 +40,7 @@ const movieReducer = (state = initialState, action) => {
     case GET_MOVIE_LIST_PANIGATION_SUCCESS: {
       state.movieListPanigations = payload.items;
       state.totalPage = payload.totalPages;
+      state.page = payload.currentPage;
       return { ...state };
     }
     case GET_MOVIE_LIST_PANIGATION_FAILED: {
@@ -58,7 +57,7 @@ const movieReducer = (state = initialState, action) => {
     }
 
     case GET_MOVIE_LIST_BY_NAME_SUCCESS: {
-      return { ...state, searchList: payload };
+      return { ...state, movieListPanigations: payload, searchList: payload };
     }
     case GET_MOVIE_LIST_BY_NAME_FAILED: {
       state.errors = payload;
@@ -67,33 +66,26 @@ const movieReducer = (state = initialState, action) => {
 
     case ADD_MOVIE_SUCCESS: {
       state.notify = payload;
-      // state.notify.status = payload.status;
-      // state.notify.severity = payload.severity;
-      // state.notify.message = payload.message;
       return { ...state };
     }
     case ADD_MOVIE_FAILED: {
       state.notify = payload;
-      // state.notify.open = payload.open;
-      // state.notify.status = payload.status;
-      // state.notify.severity = payload.severity;
-      // state.notify.message = payload.message;
       return { ...state };
     }
     case DELETE_MOVIE_SUCCESS: {
       state.notify = payload;
-      // state.notify.open = payload.open;
-      // state.notify.status = payload.status;
-      // state.notify.severity = payload.severity;
-      // state.notify.message = payload.message;
       return { ...state };
     }
     case DELETE_MOVIE_FAILED: {
       state.notify = payload;
-      // state.notify.open = payload.open;
-      // state.notify.status = payload.status;
-      // state.notify.severity = payload.severity;
-      // state.notify.message = payload.message;
+      return { ...state };
+    }
+    case EDIT_MOVIE_SUCCESS: {
+      state.notify = payload;
+      return { ...state };
+    }
+    case EDIT_MOVIE_FAILED: {
+      state.notify = payload;
       return { ...state };
     }
     case "CLOSE_NOTIFICATION": {
