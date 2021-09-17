@@ -7,6 +7,7 @@ export function Form(props) {
     props;
   return (
     <Formik
+      enableReinitialize
       initialValues={initialValues}
       validationSchema={validationSchema}
       onSubmit={(values) => {

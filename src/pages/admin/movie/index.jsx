@@ -1,33 +1,45 @@
 import React, { useState, useEffect } from "react";
 import {
   getMoiveListPagination,
-  getMoiveList,
   getMovieListByName,
 } from "../../../store/actions/movie.action";
 import { useSelector, useDispatch } from "react-redux";
 import AdminMovieTable from "./AdminMovieTable";
-import { Paper, makeStyles } from "@material-ui/core";
+import { IconButton, makeStyles, Tooltip, Grid } from "@material-ui/core";
 import Pagination from "@material-ui/lab/Pagination";
+import StorageRoundedIcon from "@material-ui/icons/StorageRounded";
 import AdminMovieForm from "./AdminMovieForm";
 import Notification from "../../../components/notification";
-import Controls from "../../../components/controls/Controls";
+// import Controls from "../../../components/controls/Controls";
 import FormDialog from "../../../components/formDialog";
+import CustomPaper from "../../../components/customPaper";
+import AdminHeader from "../../../components/adminHeader";
 import SearchInput from "../../../components/searchInput";
+import SearchIcon from "@material-ui/icons/Search";
+import AddIcon from "@material-ui/icons/Add";
 
 const useStyles = makeStyles({
-  adminMoviePaper: {
-    padding: 15,
-    margin: "20px 0",
+  root: {
+    padding: "0 15px !important",
     height: "100%",
-    borderRadius: 25,
+    maxWidth: "100%",
+    margin: "auto",
+    // overflowX: "auto",
+  },
+  adminHeaderSearch: {
     display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
+    flexDirection: "row",
+  },
+  adminHeaderAdd: {
+    marginTop: "-8px",
+    // marginLeft: 5,
+    textAlign: "right",
+    // backgroundColor: "#fff",
   },
   pagination: {
     margin: "0 auto",
     padding: "20px 0",
-    width: "30%",
+    width: "auto",
   },
 });
 
@@ -51,7 +63,15 @@ export default function Movie() {
     open: false,
     isAddMovie: false,
     title: "",
-    movie: {},
+    movie: {
+      tenPhim: "",
+      trailer: "",
+      hinhAnh: "",
+      moTa: "",
+      maNhom: "GP01",
+      ngayKhoiChieu: "",
+      danhGia: 0,
+    },
   });
 
   // lấy danh sách phim phân trang
@@ -90,37 +110,66 @@ export default function Movie() {
   };
 
   return (
-    <div>
-      <h2>Quản Lý Phim</h2>
-      <Paper className={classes.adminMoviePaper}>
-        <SearchInput
-          id="searchMovies"
-          name="searchMovies"
-          label="Tìm kiếm phim"
-          onChange={handleSearchMovies}
-        />
-        <Controls.Button
-          text="Thêm Phim"
-          color="primary"
-          variant="outlined"
-          onClick={handleOpenAddOrEditDialog}
-        />
-      </Paper>
-      <Paper>
-        <AdminMovieTable
-          movieList={movieListPanigations}
-          openDialog={openDialog}
-          setOpenDialog={setOpenDialog}
-        />
-        {totalPage > 0 ? (
-          <Pagination
-            count={totalPage}
-            color="primary"
-            className={classes.pagination}
-            onChange={handleChangePaginationPage}
-          />
-        ) : null}
-      </Paper>
+    <>
+      <Grid container>
+        <Grid item xs={12} className={classes.root}>
+          <AdminHeader
+            title="Quản Lý Phim"
+            // addOnClick={handleOpenAddOrEditDialog}
+            // searchOnChange={handleSearchMovies}
+          >
+            <Grid item md={4} xs={10} className={classes.adminHeaderSearch}>
+              <SearchInput
+                id="search"
+                name="search"
+                placeholder="Search..."
+                onChange={handleSearchMovies}
+              />
+              <div style={{ marginTop: "-8px" }}>
+                <Tooltip title="Search Movie" arrow>
+                  <IconButton style={{ backgroundColor: "#fff" }}>
+                    <SearchIcon />
+                  </IconButton>
+                </Tooltip>
+              </div>
+            </Grid>
+            <Grid item md={1} xs={2} className={classes.adminHeaderAdd}>
+              <Tooltip title="Add Movie" arrow>
+                <IconButton
+                  onClick={handleOpenAddOrEditDialog}
+                  style={{
+                    backgroundColor: "rgb(156, 39, 176)",
+                    color: "#fff",
+                  }}
+                >
+                  <AddIcon />
+                </IconButton>
+              </Tooltip>
+            </Grid>
+          </AdminHeader>
+        </Grid>
+        <Grid item xs={12} className={classes.root}>
+          <CustomPaper
+            title="Bảng thông tin Phim"
+            IconPaper={StorageRoundedIcon}
+            // color="#ec407a"
+          >
+            <AdminMovieTable
+              movieList={movieListPanigations}
+              openDialog={openDialog}
+              setOpenDialog={setOpenDialog}
+            />
+            {totalPage > 0 ? (
+              <Pagination
+                count={totalPage}
+                color="primary"
+                className={classes.pagination}
+                onChange={handleChangePaginationPage}
+              />
+            ) : null}
+          </CustomPaper>
+        </Grid>
+      </Grid>
 
       <Notification
         notifyAlert={notify}
@@ -129,6 +178,6 @@ export default function Movie() {
       <FormDialog openDialog={openDialog} setOpenDialog={setOpenDialog}>
         <AdminMovieForm openDialog={openDialog} setOpenDialog={setOpenDialog} />
       </FormDialog>
-    </div>
+    </>
   );
 }

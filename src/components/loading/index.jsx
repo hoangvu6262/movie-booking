@@ -9,9 +9,9 @@ const useStyles = makeStyles({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    zIndex: 999999,
+    // zIndex: 999999,
     backgroundColor: "#fff",
-    filter: "blur(8px)",
+    // filter: "blur(8px)",
   },
 });
 export default function Loading() {

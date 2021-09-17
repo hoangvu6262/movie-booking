@@ -9,8 +9,9 @@ import Controls from "../../../components/controls/Controls";
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    paddingTop: 25,
     "& .MuiFormControl-root": {
-      width: "90%",
+      width: "100%",
       margin: theme.spacing(1),
     },
   },
@@ -40,7 +41,6 @@ export default function AdminMovieForm(props) {
   const { openDialog, setOpenDialog } = props;
   const classes = useStyles();
   const dispatch = useDispatch();
-  // const { page } = useSelector((state) => state.movie);
 
   const handleSubmitForm = (values) => {
     const convertDateFormat = dateFormat(
@@ -51,16 +51,8 @@ export default function AdminMovieForm(props) {
     console.log(newValues);
     if (openDialog.isAddMovie) {
       dispatch(addMovie(newValues));
-      setOpenDialog({
-        ...openDialog,
-        open: false,
-      });
     } else {
       dispatch(editMovieDetail(newValues));
-      setOpenDialog({
-        ...openDialog,
-        open: false,
-      });
     }
   };
 
@@ -77,7 +69,7 @@ export default function AdminMovieForm(props) {
             className={classes.root}
             autoComplete="off"
           >
-            <Grid container>
+            <Grid container spacing={3}>
               <Grid item lg={6} xs={12}>
                 <Controls.Input
                   id="tenPhim"

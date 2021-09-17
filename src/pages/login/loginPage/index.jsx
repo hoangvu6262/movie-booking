@@ -1,19 +1,10 @@
 import React from "react";
 import LoginForm from "./LoginForm";
-
+import { useSelector, useDispatch } from "react-redux";
 import { makeStyles } from "@material-ui/core";
+import Notification from "../../../components/notification";
 
 const useStyles = makeStyles({
-  root: {
-    backgroundImage: "url(https://tix.vn/app/assets/img/icons/bg2.jpg)",
-    // marginTop: 80,
-    display: "relative",
-    backgroundColor: "black",
-    width: "100vw",
-    height: "100vh",
-    backgroundSize: "contain",
-    backgroundPosition: "center",
-  },
   logo: {
     marginTop: 15,
     width: 200,
@@ -36,17 +27,26 @@ const useStyles = makeStyles({
   },
 });
 
-export default function LoginPage() {
+export default function LoginPage(props) {
+  const { isAdmin } = props;
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const { notify } = useSelector((state) => state.user);
+  const handleCloseNotification = () => {
+    dispatch({
+      type: "CLOSE_NOTIFICATION",
+      payload: false,
+    });
+  };
   return (
-    <div className={classes.root}>
+    <>
       <div className={classes.formMovieLogin}>
         <div className={classes.logo}>
           <img src="https://tix.vn/app/assets/img/login/group@2x.png" alt="" />
         </div>
-        <LoginForm />
-        {/* <SignupForm /> */}
+        <LoginForm isAdmin={isAdmin ? true : false} />
       </div>
-    </div>
+      <Notification notifyAlert={notify} onClose={handleCloseNotification} />
+    </>
   );
 }

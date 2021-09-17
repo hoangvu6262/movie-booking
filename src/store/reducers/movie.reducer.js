@@ -13,6 +13,8 @@ import {
   DELETE_MOVIE_FAILED,
   EDIT_MOVIE_SUCCESS,
   EDIT_MOVIE_FAILED,
+  CREATE_MOVIE_SHOWTIMES_SUCCESS,
+  CREATE_MOVIE_SHOWTIMES_FAILED,
 } from "../constants/movie.const";
 
 const initialState = {
@@ -85,6 +87,14 @@ const movieReducer = (state = initialState, action) => {
       return { ...state };
     }
     case EDIT_MOVIE_FAILED: {
+      state.notify = payload;
+      return { ...state };
+    }
+    case CREATE_MOVIE_SHOWTIMES_SUCCESS: {
+      state.notify = payload;
+      return { ...state };
+    }
+    case CREATE_MOVIE_SHOWTIMES_FAILED: {
       state.notify = payload;
       return { ...state };
     }

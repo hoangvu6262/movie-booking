@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { postLogin } from "../../store/actions/user.action";
+import { postLogin, postAdminLogin } from "../../../store/actions/user.action";
 import { useHistory } from "react-router-dom";
 import {
   makeStyles,
@@ -71,7 +71,8 @@ const useStyles = makeStyles({
   },
 });
 
-export default function LoginForm() {
+export default function LoginForm(props) {
+  const { isAdmin } = props;
   const classes = useStyles();
   const dispatch = useDispatch();
   const history = useHistory();
@@ -80,6 +81,7 @@ export default function LoginForm() {
   const handleChangePassOrText = () => {
     setPass(!pass);
   };
+  console.log(isAdmin);
   return (
     <div>
       <Formik
@@ -95,11 +97,21 @@ export default function LoginForm() {
         onSubmit={(values) => {
           console.log(values);
           // alert(JSON.stringify(values, null, 2));
-          dispatch(postLogin(values.taiKhoan, values.matKhau, history));
+          if (isAdmin === false) {
+            console.log("user");
+            dispatch(postLogin(values.taiKhoan, values.matKhau, history));
+          } else {
+            console.log("admin");
+            dispatch(postAdminLogin(values.taiKhoan, values.matKhau, history));
+          }
         }}
       >
         {(formik) => (
-          <form onSubmit={formik.handleSubmit} className={classes.formLogin}>
+          <form
+            onSubmit={formik.handleSubmit}
+            className={classes.formLogin}
+            autoComplete="off"
+          >
             <CssTextField
               className={classes.formInput}
               id="taiKhoan"
@@ -155,6 +167,7 @@ export default function LoginForm() {
               variant="contained"
               color="primary"
               className={classes.btn}
+              onClick={formik.handleSubmit}
               type="submit"
             >
               Đăng nhập

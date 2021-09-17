@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Notification(props) {
   const classes = useStyles();
   const { notifyAlert, onClose, ...other } = props;
-  console.log("notifyAlert", notifyAlert);
+  // console.log("notifyAlert", notifyAlert);
   return (
     <Snackbar
       className={classes.margin}

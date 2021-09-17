@@ -14,8 +14,11 @@ import {
   DELETE_MOVIE_FAILED,
   EDIT_MOVIE_SUCCESS,
   EDIT_MOVIE_FAILED,
+  CREATE_MOVIE_SHOWTIMES_SUCCESS,
+  CREATE_MOVIE_SHOWTIMES_FAILED,
 } from "../constants/movie.const";
 import { startLoading, stopLoading } from "./common.action";
+import action from "./action";
 
 // action call api lấy danh sách phim
 export const getMoiveList = () => {
@@ -171,7 +174,7 @@ const getMovieListByNameFailed = (err) => {
 //Xóa Phim
 export const deleteMovie = (maPhim) => {
   return (dispatch) => {
-    const userAdmin = JSON.parse(localStorage.getItem("userLogin"));
+    const userAdmin = JSON.parse(sessionStorage.getItem("adminLogin"));
     const token = userAdmin.accessToken;
     const headers = {
       Authorization: `Bearer ${token}`,
@@ -227,7 +230,7 @@ const deleteMovieFailed = (err) => {
 //Thêm Phim
 export const addMovie = (movie) => {
   return (dispatch) => {
-    const userAdmin = JSON.parse(localStorage.getItem("userLogin"));
+    const userAdmin = JSON.parse(sessionStorage.getItem("adminLogin"));
     const token = userAdmin.accessToken;
     const headers = {
       Authorization: `Bearer ${token}`,
@@ -283,7 +286,7 @@ const addMovieFailed = (err) => {
 
 export const editMovieDetail = (movie) => {
   return (dispatch) => {
-    const userAdmin = JSON.parse(localStorage.getItem("userLogin"));
+    const userAdmin = JSON.parse(sessionStorage.getItem("adminLogin"));
     const token = userAdmin.accessToken;
     const headers = {
       Authorization: `Bearer ${token}`,
@@ -321,6 +324,52 @@ export const editMovieDetail = (movie) => {
           type: EDIT_MOVIE_FAILED,
           payload: notification,
         });
+      });
+  };
+};
+
+/**
+ * tạo lịch chiếu
+ * createMovieShowtimes(showTime)
+ * url('https://movie0706.cybersoft.edu.vn/api/QuanLyDatVe/TaoLichChieu')
+ */
+export const createMovieShowtimes = (showTime) => {
+  return (dispatch) => {
+    dispatch(startLoading());
+
+    const userAdmin = JSON.parse(sessionStorage.getItem("adminLogin"));
+    const token = userAdmin.accessToken;
+    const headers = {
+      Authorization: `Bearer ${token}`,
+    };
+    axios
+      .post(
+        "https://movie0706.cybersoft.edu.vn/api/QuanLyDatVe/TaoLichChieu",
+        showTime,
+        { headers }
+      )
+      .then((response) => {
+        dispatch(stopLoading());
+        // nếu tạo lịch chiếu thành công
+        dispatch(
+          action(CREATE_MOVIE_SHOWTIMES_SUCCESS, {
+            open: true,
+            severity: "success",
+            message: response.data,
+          })
+        );
+      })
+      .catch((error) => {
+        dispatch(stopLoading());
+        // nếu tạo lịch chiếu không thành công
+        console.log(error.response.data);
+        dispatch(
+          action(CREATE_MOVIE_SHOWTIMES_FAILED, {
+            open: true,
+            severity: "error",
+            message: error.response.data,
+          })
+        );
       });
   };
 };
