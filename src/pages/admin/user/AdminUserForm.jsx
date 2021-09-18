@@ -68,7 +68,7 @@ export default function AdminUserForm(props) {
     });
   }, [openDialog]);
 
-  console.log(iValue);
+  // console.log(iValue);
 
   const handleSubmitForm = (values) => {
     if (openDialog.isAddUser) {
@@ -87,7 +87,7 @@ export default function AdminUserForm(props) {
     >
       {(formik) => {
         // const { values, touched, errors, handleSubmit, handleChange } = formik;
-        console.log("formik.values", formik.values);
+        // console.log("formik.values", formik.values);
         return (
           <form
             onSubmit={formik.handleSubmit}

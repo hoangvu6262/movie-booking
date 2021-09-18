@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Container, Grid, Paper, Avatar, makeStyles } from "@material-ui/core";
 
@@ -6,7 +6,6 @@ import { getCinemaSystemInfo } from "../../store/actions/cinema.action";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    // position: "relative",
     zIndex: -1,
     marginTop: 100,
   },
@@ -14,9 +13,7 @@ const useStyles = makeStyles((theme) => ({
     // height: 800,
   },
   paper: {
-    // padding: theme.spacing(2),
     height: 800,
-    // textAlign: "center",
     color: theme.palette.text.secondary,
   },
   logoItem: {

@@ -33,6 +33,11 @@ export const mainRouter = [
     exact: false,
     Component: SearchMovie,
   },
+  {
+    path: "/userinfo/profile-user&taikhoan=:taiKhoan",
+    exact: true,
+    Component: UserInfo,
+  },
 ];
 
 /**

@@ -57,7 +57,7 @@ export const postLogin = (taiKhoan, matKhau, history) => {
         localStorage.setItem("userLogin", JSON.stringify(res.data));
         // trở lại trang trước đó
         setTimeout(function () {
-          history.goBack();
+          history.push("/");
         }, 3000);
       })
       .catch((err) => {
@@ -106,7 +106,9 @@ export const postAdminLogin = (taiKhoan, matKhau, history) => {
           );
           // lưu vào sessionStorage.
           sessionStorage.setItem("adminLogin", JSON.stringify(response.data));
-          history.push("/admin");
+          setTimeout(function () {
+            history.push("/admin");
+          }, 3000);
         } else {
           dispatch(
             action(ADMIN_LOGIN_FAILED, {
@@ -134,7 +136,7 @@ export const postAdminLogin = (taiKhoan, matKhau, history) => {
  * postRegister(user)
  */
 
-export const postRegister = (user) => {
+export const postRegister = (user, history) => {
   return (dispatch) => {
     dispatch(startLoading());
     axios
@@ -153,6 +155,9 @@ export const postRegister = (user) => {
             message: "Đăng ký thành công",
           })
         );
+        setTimeout(function () {
+          history.push("/login");
+        }, 3000);
       })
       .catch((error) => {
         //nếu đăng ký ko thành công

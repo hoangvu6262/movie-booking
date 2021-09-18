@@ -16,10 +16,10 @@ import { getMoiveDetail } from "../../../store/actions/movie.action";
 import MovieInfoTable from "./MovieInfoTable";
 // import DetailMovie from "../../main/deail-movie";
 import AdminHeader from "../../../components/adminHeader";
-import FormDialog from "../../../components/formDialog";
 import AdminMovieForm from "../movie/AdminMovieForm";
 import MovieInfoForm from "./MovieInfoForm";
 import Notification from "../../../components/notification";
+import FormDialog from "../../../components/formDialog";
 
 const useStyles = makeStyles({
   root: {},

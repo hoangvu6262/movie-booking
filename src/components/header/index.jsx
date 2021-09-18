@@ -9,9 +9,6 @@ import {
   Grid,
   Hidden,
   Drawer,
-  List,
-  ListItem,
-  ListItemIcon,
   Divider,
   ListItemText,
   MenuItem,
@@ -19,16 +16,13 @@ import {
   makeStyles,
   withStyles,
 } from "@material-ui/core";
-
 import MenuIcon from "@material-ui/icons/Menu";
 import AccountCircle from "@material-ui/icons/AccountCircle";
-import ExitToAppIcon from "@material-ui/icons/ExitToApp";
-import SupervisorAccountIcon from "@material-ui/icons/SupervisorAccount";
-import EditIcon from "@material-ui/icons/Edit";
+import HeaderDrawer from "./HeaderDrawer";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    // zIndex: 0,
     opacity: 0.9,
     maxHeight: "60px",
     backgroundColor: "white",
@@ -82,8 +76,6 @@ const useStyles = makeStyles((theme) => ({
     color: "#9b9b9b",
     fontSize: "15px",
     cursor: "pointer",
-    // fontFamily: "Yanone Kaffeesatz",
-    // letterSpacing: "1px",
     "& span": {
       margin: "0 8px",
       textDecoration: "none",
@@ -98,15 +90,15 @@ const useStyles = makeStyles((theme) => ({
     height: 30,
     width: 30,
   },
-  drawer: {
-    width: "250px",
-  },
 }));
 
 const StyledMenu = withStyles({
   paper: {
+    borderRadius: "none",
+    width: 170,
     border: "1px solid #d3d4d5",
-    marginTop: "5px",
+    marginTop: "20px",
+    marginRight: 0,
   },
 })((props) => (
   <Menu
@@ -127,6 +119,11 @@ const StyledMenu = withStyles({
 export default function Header() {
   const classes = useStyles();
 
+  const history = useHistory();
+
+  //lấy userLogin từ localStorage và chuyển về object
+  const userLogin = JSON.parse(localStorage.getItem("userLogin"));
+
   // header menu
   const Headermenu = [
     { name: "Lịch chiếu", href: "#movie-list" },
@@ -137,9 +134,9 @@ export default function Header() {
 
   // render header menu
   const renderHeaderMenu = () => {
-    return Headermenu.map((menu, value) => {
+    return Headermenu.map((menu, index) => {
       return (
-        <li key={value}>
+        <li key={index}>
           <a href={`/${menu.href}`}>{menu.name}</a>
         </li>
       );
@@ -159,38 +156,6 @@ export default function Header() {
     setDrawerOpen(open);
   };
 
-  // drawer is open
-  const list = () => (
-    <div
-      className={classes.drawer}
-      role="presentation"
-      onClick={toggleDrawer(false)}
-      onKeyDown={toggleDrawer(false)}
-    >
-      <List>
-        {Headermenu.map((menu, value) => (
-          <a href={menu.href} key={value}>
-            <ListItem button>
-              <ListItemText primary={menu.name} />
-            </ListItem>
-          </a>
-        ))}
-      </List>
-      <Divider />
-      <List>
-        <ListItem button>
-          <ListItemIcon>
-            <AccountCircle />
-          </ListItemIcon>
-          <ListItemText primary="Đăng nhập" />
-        </ListItem>
-      </List>
-    </div>
-  );
-
-  //lấy userLogin từ localStorage và chuyển về object
-  const userLogin = JSON.parse(localStorage.getItem("userLogin"));
-
   // menu userLogin
   const [anchorEl, setAnchorEl] = React.useState(null);
   const handleClick = (event) => {
@@ -204,6 +169,11 @@ export default function Header() {
   const handleLogOut = () => {
     localStorage.removeItem("userLogin");
     setAnchorEl(null);
+  };
+
+  // chuyển hướng đến trang profile
+  const handleToProfile = () => {
+    history.push(`/userinfo/profile-user&taikhoan=${userLogin.taiKhoan}`);
   };
 
   return (
@@ -241,9 +211,14 @@ export default function Header() {
                   anchor="right"
                   open={drawerOpen}
                   onClose={toggleDrawer(false)}
-                  onOpen={toggleDrawer(true)}
+                  // onOpen={toggleDrawer(true)}
                 >
-                  {list()}
+                  <HeaderDrawer
+                    userLogin={userLogin}
+                    Headermenu={Headermenu}
+                    setDrawerOpen={setDrawerOpen}
+                    setAnchorEl={setAnchorEl}
+                  />
                 </Drawer>
               </Hidden>
               <Hidden mdDown>
@@ -260,23 +235,11 @@ export default function Header() {
                       open={Boolean(anchorEl)}
                       onClose={handleClose}
                     >
-                      <MenuItem>
-                        <ListItemIcon>
-                          <SupervisorAccountIcon fontSize="small" />
-                        </ListItemIcon>
+                      <MenuItem onClick={handleToProfile}>
                         <ListItemText primary="Thông tin" />
-                      </MenuItem>
-                      <MenuItem>
-                        <ListItemIcon>
-                          <EditIcon fontSize="small" />
-                        </ListItemIcon>
-                        <ListItemText primary="Chỉnh sửa" />
                       </MenuItem>
                       <Divider />
                       <MenuItem onClick={handleLogOut}>
-                        <ListItemIcon>
-                          <ExitToAppIcon fontSize="small" />
-                        </ListItemIcon>
                         <ListItemText primary="Đăng xuất" />
                       </MenuItem>
                     </StyledMenu>

@@ -19,55 +19,44 @@ import * as yup from "yup";
 const CssTextField = withStyles({
   root: {
     // backgroundColor: "#293556",
+    height: 50,
+    "& .MuiInputBase-input": {
+      height: "2rem",
+      fontFamily: `font-family: "Roboto", "Helvetica", "Arial", sans-serif`,
+      padding: "3px 12px",
+      fontSize: 13,
+    },
     "& input": {
-      color: "#def3f6",
+      color: "#495057",
+      fontFamily: `font-family: "Roboto", "Helvetica", "Arial", sans-serif`,
     },
-    "& label": {
-      color: "#ddefe3",
-    },
-    "& label.Mui-focused": {
-      color: "#ddefe3",
-      fontSize: 17,
-    },
+
     "& .MuiInput-underline:after": {
-      borderBottomColor: "green",
-    },
-    "& .MuiOutlinedInput-root": {
-      "& fieldset": {
-        borderColor: "#ddefe3",
-        borderRadius: 15,
-      },
-      "&:hover fieldset": {
-        borderColor: "#ddefe3",
-      },
-      "&.Mui-focused fieldset": {
-        borderColor: "#ddefe3",
+      borderBottom: "1px solid #9c27b0",
+      "&:hover": {
+        border: "none",
       },
     },
   },
 })(TextField);
 
 const useStyles = makeStyles({
-  logo: {
-    marginTop: 15,
-    width: 300,
-    margin: "auto",
-    "& img": {
-      width: 300,
-    },
-  },
   formLogin: {
-    margin: "15px",
-    color: "#fff",
+    // margin: "30px 18px",
+    padding: "30px 18px",
+    color: "#495057",
   },
   formInput: {
     margin: "15px 0",
-    color: "#fff",
+    color: "#495057",
     width: "100%",
   },
   btn: {
-    marginTop: "15px",
-    marginLeft: "65%",
+    marginTop: "30px",
+    marginLeft: "50%",
+    transform: "translateX(-50%)",
+    // color: "#ec407a",
+    color: "#5252d4",
   },
 });
 
@@ -116,8 +105,7 @@ export default function LoginForm(props) {
               className={classes.formInput}
               id="taiKhoan"
               name="taiKhoan"
-              label="Tài khoản"
-              variant="outlined"
+              placeholder="ACCOUNT..."
               value={formik.values.taiKhoan}
               onChange={formik.handleChange}
               error={formik.touched.taiKhoan && Boolean(formik.errors.taiKhoan)}
@@ -125,7 +113,7 @@ export default function LoginForm(props) {
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
-                    <AccountCircle style={{ color: "#ddefe3" }} />
+                    <AccountCircle style={{ color: "#495057" }} />
                   </InputAdornment>
                 ),
               }}
@@ -136,8 +124,7 @@ export default function LoginForm(props) {
               id="matKhau"
               name="matKhau"
               type={pass ? "password" : "text"}
-              label="Mật khẩu"
-              variant="outlined"
+              placeholder="PASSWORD..."
               value={formik.values.matKhau}
               onChange={formik.handleChange}
               error={formik.touched.matKhau && Boolean(formik.errors.matKhau)}
@@ -145,7 +132,7 @@ export default function LoginForm(props) {
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
-                    <LockOpenIcon style={{ color: "#ddefe3" }} />
+                    <LockOpenIcon style={{ color: "#495057" }} />
                   </InputAdornment>
                 ),
                 endAdornment: (
@@ -155,17 +142,17 @@ export default function LoginForm(props) {
                     style={{ cursor: "pointer" }}
                   >
                     {pass ? (
-                      <VisibilityOffIcon style={{ color: "#ddefe3" }} />
+                      <VisibilityOffIcon style={{ color: "#495057" }} />
                     ) : (
-                      <VisibilityIcon style={{ color: "#ddefe3" }} />
+                      <VisibilityIcon style={{ color: "#495057" }} />
                     )}
                   </InputAdornment>
                 ),
               }}
             />
             <Button
-              variant="contained"
-              color="primary"
+              // variant="contained"
+              // color="primary"
               className={classes.btn}
               onClick={formik.handleSubmit}
               type="submit"

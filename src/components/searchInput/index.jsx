@@ -47,11 +47,9 @@ export default function SearchInput(props) {
     <>
       <TextField
         className={classes.root}
-        // variant="outlined"
         id={id}
         value={value}
         onChange={onChange}
-        // label={label}
         placeholder={label}
         name={name}
         {...other}

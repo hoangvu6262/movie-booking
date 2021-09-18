@@ -2,50 +2,49 @@ import React from "react";
 import {
   Container,
   Grid,
-  FormControl,
-  OutlinedInput,
   IconButton,
   InputAdornment,
-  InputLabel,
-  TextField,
-  Button,
   makeStyles,
 } from "@material-ui/core";
 import { Formik } from "formik";
 import * as yup from "yup";
 import SearchIcon from "@material-ui/icons/Search";
 import { useHistory } from "react-router-dom";
-import clsx from "clsx";
+import SearchInput from "../searchInput";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   root: {
     position: "relative",
     display: "flex",
     justifyContent: "center",
     zIndex: 1,
     // backgroun: "#fff",
+    [theme.breakpoints.down("xs")]: {
+      marginTop: 100,
+    },
   },
   bookingContainer: {
     position: "absolute",
     top: "-40px",
-    // width: 912,
     border: "1px solid #9f9f9f9f",
     borderRadius: "6px",
     boxShadow: "0 0 10px rgb(0 0 0 / 30%)",
     height: 85,
     backgroundColor: "#fff",
     // margin: "15px auto",
+    [theme.breakpoints.down("xs")]: {
+      border: "none",
+      boxShadow: "none",
+    },
   },
-  margin: {
-    margin: "15px 50%",
-    transform: "translateX(-50%)",
-    width: "70%",
+  searchInputContainer: {
+    margin: "18px auto",
+    width: "90%",
+    "& .MuiInputBase-input": {
+      height: "2rem",
+    },
   },
-  btn: {
-    marginTop: "15px",
-    // marginLeft: "65%",
-  },
-});
+}));
 
 export default function BookingForm() {
   const classes = useStyles();
@@ -61,61 +60,26 @@ export default function BookingForm() {
               .required("Bạn phải nhập tên phim để tìm kiếm."),
           })}
           onSubmit={(values) => {
-            console.log(values);
+            // console.log(values);
             history.push(`/search/${values.search}`);
           }}
         >
           {(formik) => (
-            <form onSubmit={formik.handleSubmit}>
-              {/* <TextField
-                className={classes.margin}
-                id="search"
-                name="search"
-                label="Tìm kiếm"
-                variant="outlined"
-                value={formik.values.search}
-                onChange={formik.handleChange}
-                error={formik.touched.search && Boolean(formik.errors.search)}
-                helperText={formik.touched.search && formik.errors.search}
-                endAdornment={
-                  <InputAdornment position="end">
-                    <IconButton
-                      aria-label="toggle password visibility"
-                      onClick={formik.handleSubmit}
-                      edge="end"
-                    >
-                      <SearchIcon />
-                    </IconButton>
-                  </InputAdornment>
-                }
-              />
-              <Button
-                variant="contained"
-                color="primary"
-                className={classes.btn}
-                type="submit"
-              >
-                Tìm kiếm
-              </Button> */}
+            <form onSubmit={formik.handleSubmit} autoComplete="off">
               <Grid container>
-                <Grid item>
-                  <FormControl
-                    // className={clsx(classes.margin, classes.textField)}
-                    variant="outlined"
-                    className={classes.margin}
-                  >
-                    <InputLabel htmlFor="search">Tìm kiếm phim</InputLabel>
-                    <OutlinedInput
-                      id="search"
-                      name="search"
-                      type="text"
-                      value={formik.values.search}
-                      onChange={formik.handleChange}
-                      error={
-                        formik.touched.search && Boolean(formik.errors.search)
-                      }
-                      helperText={formik.touched.search && formik.errors.search}
-                      endAdornment={
+                <Grid item className={classes.searchInputContainer}>
+                  <SearchInput
+                    id="search"
+                    name="search"
+                    label="Tìm kiếm phim..."
+                    value={formik.values.search}
+                    onChange={formik.handleChange}
+                    error={
+                      formik.touched.search && Boolean(formik.errors.search)
+                    }
+                    helperText={formik.touched.search && formik.errors.search}
+                    InputProps={{
+                      endAdornment: (
                         <InputAdornment position="end">
                           <IconButton
                             aria-label="toggle password visibility"
@@ -125,10 +89,9 @@ export default function BookingForm() {
                             <SearchIcon />
                           </IconButton>
                         </InputAdornment>
-                      }
-                      labelWidth={105}
-                    />
-                  </FormControl>
+                      ),
+                    }}
+                  />
                 </Grid>
               </Grid>
             </form>
