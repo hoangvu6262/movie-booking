@@ -20,6 +20,7 @@ import MenuIcon from "@material-ui/icons/Menu";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import HeaderDrawer from "./HeaderDrawer";
 import { useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -121,6 +122,8 @@ export default function Header() {
 
   const history = useHistory();
 
+  const dispatch = useDispatch();
+
   //lấy userLogin từ localStorage và chuyển về object
   const userLogin = JSON.parse(localStorage.getItem("userLogin"));
 
@@ -169,6 +172,11 @@ export default function Header() {
   const handleLogOut = () => {
     localStorage.removeItem("userLogin");
     setAnchorEl(null);
+    dispatch({
+      type: "LOG_OUT",
+      payload: false,
+    });
+    history.push(`/`);
   };
 
   // chuyển hướng đến trang profile

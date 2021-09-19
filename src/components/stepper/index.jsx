@@ -184,9 +184,9 @@ export default function StepperBooking(props) {
           </div>
         ) : (
           <div>
-            <Typography className={classes.instructions}>
+            <div className={classes.instructions}>
               {getStepContent(activeStep, stepper)}
-            </Typography>
+            </div>
             <div>
               <Button
                 disabled={activeStep === 0}

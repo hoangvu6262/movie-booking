@@ -37,9 +37,11 @@ const userReducer = (state = initialState, action) => {
 
   switch (type) {
     case LOGIN_SUCCESS:
-      return { ...state, isAdimLogin: true, notify: payload };
+      return { ...state, isLogin: true, notify: payload };
     case LOGIN_FAILED:
-      return { ...state, isAdimLogin: false, notify: payload };
+      return { ...state, isLogin: false, notify: payload };
+    case "LOGIN_AUTO":
+      return { ...state, isLogin: payload };
     case ADMIN_LOGIN_SUCCESS:
       return { ...state, isAdimLogin: true, notify: payload };
     case ADMIN_LOGIN_FAILED:
@@ -105,6 +107,8 @@ const userReducer = (state = initialState, action) => {
 
     case "ADMIN_LOGOUT":
       return { ...state, isAdimLogin: payload };
+    case "LOG_OUT":
+      return { ...state, isLogin: payload };
     default:
       return { ...state };
   }

@@ -1,7 +1,14 @@
 import React from "react";
 import LoginForm from "./LoginForm";
 import { useSelector, useDispatch } from "react-redux";
-import { makeStyles, Container, List, Grid, Button } from "@material-ui/core";
+import {
+  makeStyles,
+  Container,
+  List,
+  Grid,
+  Button,
+  Toolbar,
+} from "@material-ui/core";
 import Notification from "../../../components/notification";
 import { NavLink } from "react-router-dom";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
@@ -17,6 +24,9 @@ const useStyles = makeStyles((theme) => ({
     paddingBottom: 180,
     backgroundSize: "cover",
     backgroundPosition: "center center",
+  },
+  toolbar: {
+    margin: 20,
   },
   logo: {
     width: "90%",
@@ -117,50 +127,56 @@ export default function LoginPage(props) {
   };
   return (
     <div className={classes.root}>
-      <Container maxWidth="md">
-        <Grid container className={classes.LoginPageHeader}>
-          <Grid item sm={8} xs={6}>
-            <NavLink to="/" className={classes.loginPageTitle}>
-              <p>Login Page</p>
-            </NavLink>
-          </Grid>
-          <Grid item sm={4} xs={6}>
-            <List
-              component="div"
-              disablePadding
-              style={{ marginLeft: 35 }}
-              className={classes.LoginPageMenu}
-            >
-              <NavLink
-                to="/login"
-                activeClassName={classes.activeNavlink}
-                className={classes.navlink}
-                exact={true}
-              >
-                <Button
-                  startIcon={<AccountCircleIcon />}
-                  className={classes.navlinkText}
-                >
-                  Login
-                </Button>
+      {isAdmin === true ? (
+        <Container maxWidth="md">
+          <Toolbar className={classes.toolbar} />
+        </Container>
+      ) : (
+        <Container maxWidth="md">
+          <Grid container className={classes.LoginPageHeader}>
+            <Grid item sm={8} xs={6}>
+              <NavLink to="/" className={classes.loginPageTitle}>
+                <p>Login Page</p>
               </NavLink>
-              <NavLink
-                to="/register"
-                activeClassName={classes.activeNavlink}
-                className={classes.navlink}
-                exact={true}
+            </Grid>
+            <Grid item sm={4} xs={6}>
+              <List
+                component="div"
+                disablePadding
+                style={{ marginLeft: 35 }}
+                className={classes.LoginPageMenu}
               >
-                <Button
-                  startIcon={<AddCircleIcon />}
-                  className={classes.navlinkText}
+                <NavLink
+                  to="/login"
+                  activeClassName={classes.activeNavlink}
+                  className={classes.navlink}
+                  exact={true}
                 >
-                  Register
-                </Button>
-              </NavLink>
-            </List>
+                  <Button
+                    startIcon={<AccountCircleIcon />}
+                    className={classes.navlinkText}
+                  >
+                    Login
+                  </Button>
+                </NavLink>
+                <NavLink
+                  to="/register"
+                  activeClassName={classes.activeNavlink}
+                  className={classes.navlink}
+                  exact={true}
+                >
+                  <Button
+                    startIcon={<AddCircleIcon />}
+                    className={classes.navlinkText}
+                  >
+                    Register
+                  </Button>
+                </NavLink>
+              </List>
+            </Grid>
           </Grid>
-        </Grid>
-      </Container>
+        </Container>
+      )}
       <Container maxWidth="md" className={classes.loginPageContent}>
         <div className={classes.formMovieLogin}>
           <div className={classes.logo}>

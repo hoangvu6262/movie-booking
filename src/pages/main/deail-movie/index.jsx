@@ -8,6 +8,7 @@ import dateFormat from "date-format";
 import Loading from "../../../components/loading";
 import { withStyles, Container, Grid } from "@material-ui/core";
 import MovieCardHorizontal from "../../../components/movie-card/MovieCardHorizontal";
+import LoginForm from "../../login/loginPage";
 
 const styles = {
   detailMovie: {
@@ -77,110 +78,115 @@ class DetailMovie extends Component {
   };
   render() {
     const { classes } = this.props;
-    if (this.props.loading) {
-      return <Loading />;
-    } else {
-      return (
-        <div className={classes.detailMovie}>
-          <div className={classes.detailMovieContent}>
-            <img
-              src={this.props.movieDetail.hinhAnh}
-              alt="bg"
-              className={classes.image}
-            />
-            <div className={classes.devide}></div>
-            <Container maxWidth="md" className={classes.detailMovieContainer}>
-              <MovieCardHorizontal movie={this.props.movieDetail} />
-              <p className={classes.info}>Thông Tin</p>
-            </Container>
-            <Container maxWidth="md">
-              <Grid
-                container
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  paddingBottom: 50,
-                }}
-              >
-                <Grid item md={6}>
-                  <table
-                    className="table table-borderless"
-                    style={{ marginTop: 35, color: "#fff" }}
-                  >
-                    <thead>
-                      <tr>
-                        <th>Ngày công chiếu</th>
-                        <td>{this.props.movieDetail.ngayKhoiChieu}</td>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <th>Đạo diện</th>
-                        <td>Victor Vũ</td>
-                      </tr>
-                      <tr>
-                        <th>diễn viên</th>
-                        <td>Thornton</td>
-                      </tr>
-                      <tr>
-                        <th>thể loại</th>
-                        <td>
-                          Romance, Action, Mystery, Thriller, Animation, Crime
-                        </td>
-                      </tr>
-                      <tr>
-                        <th>Định dạng</th>
-                        <td>2D/Digitals</td>
-                      </tr>
-                      <tr>
-                        <th>Quốc gia SX</th>
-                        <td>Việt Nam</td>
-                      </tr>
-                    </tbody>
-                  </table>
+    if (this.props.isLogin) {
+      if (this.props.loading) {
+        return <Loading />;
+      } else {
+        return (
+          <div className={classes.detailMovie}>
+            <div className={classes.detailMovieContent}>
+              <img
+                src={this.props.movieDetail.hinhAnh}
+                alt="bg"
+                className={classes.image}
+              />
+              <div className={classes.devide}></div>
+              <Container maxWidth="md" className={classes.detailMovieContainer}>
+                <MovieCardHorizontal movie={this.props.movieDetail} />
+                <p className={classes.info}>Thông Tin</p>
+              </Container>
+              <Container maxWidth="md">
+                <Grid
+                  container
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    paddingBottom: 50,
+                  }}
+                >
+                  <Grid item md={6}>
+                    <table
+                      className="table table-borderless"
+                      style={{ marginTop: 35, color: "#fff" }}
+                    >
+                      <thead>
+                        <tr>
+                          <th>Ngày công chiếu</th>
+                          <td>{this.props.movieDetail.ngayKhoiChieu}</td>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <th>Đạo diện</th>
+                          <td>Victor Vũ</td>
+                        </tr>
+                        <tr>
+                          <th>diễn viên</th>
+                          <td>Thornton</td>
+                        </tr>
+                        <tr>
+                          <th>thể loại</th>
+                          <td>
+                            Romance, Action, Mystery, Thriller, Animation, Crime
+                          </td>
+                        </tr>
+                        <tr>
+                          <th>Định dạng</th>
+                          <td>2D/Digitals</td>
+                        </tr>
+                        <tr>
+                          <th>Quốc gia SX</th>
+                          <td>Việt Nam</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </Grid>
+                  <Grid item md={6}>
+                    <table
+                      className="table table-borderless"
+                      style={{ marginTop: 35, color: "#fff" }}
+                    >
+                      <thead>
+                        <tr>
+                          <th>Nội dung</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>{this.props.movieDetail.moTa}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </Grid>
                 </Grid>
-                <Grid item md={6}>
-                  <table
-                    className="table table-borderless"
-                    style={{ marginTop: 35, color: "#fff" }}
-                  >
-                    <thead>
-                      <tr>
-                        <th>Nội dung</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>{this.props.movieDetail.moTa}</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </Grid>
-              </Grid>
-            </Container>
-          </div>
+              </Container>
+            </div>
 
-          <section className="showTime">
-            <Container maxWidth="md">
-              <p className={classes.info}>Lịch chiếu phim</p>
-              <table className="table">
-                <thead>
-                  <tr>
-                    <th scope="col">Số thứ tự</th>
-                    <th scope="col">Tên cụm rạp</th>
-                    <th scope="col">Tên rạp</th>
-                    <th scope="col">Giá vé</th>
-                    <th scope="col">Ngày chiếu</th>
-                  </tr>
-                </thead>
-                <tbody>{this.renderShowTime()}</tbody>
-              </table>
-            </Container>
-          </section>
-        </div>
-      );
+            <section className="showTime">
+              <Container maxWidth="md">
+                <p className={classes.info}>Lịch chiếu phim</p>
+                <table className="table">
+                  <thead>
+                    <tr>
+                      <th scope="col">Số thứ tự</th>
+                      <th scope="col">Tên cụm rạp</th>
+                      <th scope="col">Tên rạp</th>
+                      <th scope="col">Giá vé</th>
+                      <th scope="col">Ngày chiếu</th>
+                    </tr>
+                  </thead>
+                  <tbody>{this.renderShowTime()}</tbody>
+                </table>
+              </Container>
+            </section>
+          </div>
+        );
+      }
+    } else {
+      return <>{this.props.history.push(`/login`)}</>;
     }
   }
+
   componentDidMount() {
     const { params } = this.props.match;
     console.log("params: ", params);
@@ -191,6 +197,7 @@ const mapStateToProps = (state) => {
   return {
     movieDetail: state.movie.movieDetail,
     loading: state.common.loading,
+    isLogin: state.user.isLogin,
   };
 };
 

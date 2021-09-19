@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Container, Grid, Paper, Avatar, makeStyles } from "@material-ui/core";
-
-import { getCinemaSystemInfo } from "../../store/actions/cinema.action";
+import { useHistory } from "react-router-dom";
+import {
+  // getCinemaSystemInfo,
+  getCinemaSystemShowTime,
+} from "../../store/actions/cinema.action";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -51,6 +54,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "row",
     borderBottom: "1px solid #9b9b9b",
+    cursor: "pointer",
   },
   cinemaText: {
     whiteSpace: "nowrap",
@@ -67,17 +71,39 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function CinemaTable(props) {
+  //props
+  const { cinemaList } = props;
   // classes jss
   const classes = useStyles();
   const dispatch = useDispatch();
-  const { cinemaInfo } = useSelector((state) => state.cinema);
+  const history = useHistory();
+  const { cinemaSystemShowtime } = useSelector((state) => state.cinema);
 
-  //props
-  const { cinemaList } = props;
+  // lấy danh sách phim theo hệ thống rạp
+  const [listMovie, setListMovie] = useState({});
+
+  useEffect(() => {
+    // dispatch(getCinemaSystemInfo("BHDStar"));
+    dispatch(getCinemaSystemShowTime("BHDStar"));
+  }, []);
 
   //handleClick để thay đổi hệ thống rạp
   const handleClick = (maHeThongRap) => {
-    dispatch(getCinemaSystemInfo(maHeThongRap));
+    // dispatch(getCinemaSystemInfo(maHeThongRap));
+    dispatch(getCinemaSystemShowTime(maHeThongRap));
+  };
+
+  // thay đổi thông tin lịch chiếu hệ thống rạp
+  const handleChangeCinemaSystemShowTime = (index) => {
+    const listMovie1 = cinemaSystemShowtime[index];
+    setListMovie(listMovie1);
+  };
+  // console.log("cinemaSystemShowtime", cinemaSystemShowtime);
+  // console.log("listMovie", listMovie.danhSachPhim);
+
+  // chuyển hướng đến trang movieDetail
+  const handleToMovieDetail = (id) => {
+    history.push(`/movie-detail/${id}`);
   };
 
   //render cinema list
@@ -99,17 +125,44 @@ function CinemaTable(props) {
 
   //render cinema info list
   const renderCinemaInfoList = () => {
-    if (cinemaInfo) {
-      return cinemaInfo.map((cinemaInfo, index) => {
+    if (cinemaSystemShowtime) {
+      return cinemaSystemShowtime.map((cinemaInfo, index) => {
         return (
-          <div key={index} className={classes.cinemaInfoItem}>
+          <div
+            key={index}
+            className={classes.cinemaInfoItem}
+            onClick={() => handleChangeCinemaSystemShowTime(index)}
+          >
             <Avatar
               variant="square"
               src="https://open-stand.org/wp-content/uploads/2016/04/International-Union-of-Cinemas-Calls-for-Open-Standards-in-the-Cinema-Industry.jpg"
             ></Avatar>
             <div className={classes.cinemaText}>
-              <p>{cinemaInfo.tenCumRap}</p>
+              <p style={{ color: "red", fontSize: 15 }}>
+                {cinemaInfo.tenCumRap}
+              </p>
               <p>{cinemaInfo.diaChi}</p>
+            </div>
+          </div>
+        );
+      });
+    }
+  };
+
+  // render lịch chiếu phim
+  const renderListmovieShowtime = () => {
+    if (listMovie.danhSachPhim) {
+      return listMovie.danhSachPhim.map((movieInfo, index) => {
+        return (
+          <div
+            key={index}
+            className={classes.cinemaInfoItem}
+            onClick={() => handleToMovieDetail(movieInfo.maPhim)}
+          >
+            <Avatar variant="square" src={movieInfo.hinhAnh}></Avatar>
+            <div className={classes.cinemaText}>
+              <p style={{ color: "red", fontSize: 15 }}>{movieInfo.tenPhim}</p>
+              <p>{movieInfo.maPhim}</p>
             </div>
           </div>
         );
@@ -134,7 +187,11 @@ function CinemaTable(props) {
             </Paper>
           </Grid>
           <Grid item xs={7}>
-            <Paper className={classes.paper}></Paper>
+            <Paper className={classes.paper}>
+              <div className={classes.cinemaInfoList}>
+                {renderListmovieShowtime()}
+              </div>
+            </Paper>
           </Grid>
         </Grid>
       </Container>

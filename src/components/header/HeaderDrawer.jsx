@@ -10,6 +10,7 @@ import {
 } from "@material-ui/core";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import { useHistory, NavLink } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   drawer: {
@@ -34,6 +35,8 @@ export default function HeaderDrawer(props) {
   const classes = useStyles();
 
   const history = useHistory();
+
+  const dispatch = useDispatch();
 
   // onClick toggleDrawer()
   const toggleDrawer = (open) => (event) => {
@@ -61,6 +64,11 @@ export default function HeaderDrawer(props) {
   const handleLogOut = () => {
     localStorage.removeItem("userLogin");
     setAnchorEl(null);
+    dispatch({
+      type: "LOG_OUT",
+      payload: false,
+    });
+    history.push(`/`);
   };
 
   // chuyển hướng đến trang login

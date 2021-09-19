@@ -4,8 +4,11 @@ import {
   GET_CINEMA_SYSTEM_INFO_FAILED,
   GET_CINEMA_SYSTEM_SUCCESS,
   GET_CINEMA_SYSTEM_FAILED,
+  GET_CINEMA_SYSTEM_SHOWTIME_SUCCESS,
+  GET_CINEMA_SYSTEM_SHOWTIME_FAILED,
 } from "../constants/cinema.const";
 import { startLoading, stopLoading } from "./common.action";
+import action from "./action";
 
 // action call api lay he thong rap
 export const getCinemaSystem = () => {
@@ -80,5 +83,31 @@ const getCinemaSystemInfoFailed = (err) => {
   return {
     type: GET_CINEMA_SYSTEM_INFO_FAILED,
     payload: err,
+  };
+};
+
+/**
+ * lấy thông tin lịch chiếu hệ thống rạp
+ * getCinemaSystemShowTime(maHeThongRap)
+ */
+
+export const getCinemaSystemShowTime = (maHeThongRap) => {
+  return (dispatch) => {
+    axios
+      .get(
+        `https://movie0706.cybersoft.edu.vn/api/QuanLyRap/LayThongTinLichChieuHeThongRap?maHeThongRap=${maHeThongRap}&maNhom=GP01`,
+        null
+      )
+      .then((response) => {
+        // nếu lấy thông tin thành công
+        // console.log(response.data[0]);
+        dispatch(action(GET_CINEMA_SYSTEM_SHOWTIME_SUCCESS, response.data[0]));
+      })
+      .catch((error) => {
+        // nếu lấy thông tin không thành công
+        dispatch(
+          action(GET_CINEMA_SYSTEM_SHOWTIME_FAILED, error.response.data)
+        );
+      });
   };
 };

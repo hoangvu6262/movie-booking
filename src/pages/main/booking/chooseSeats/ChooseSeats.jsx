@@ -66,22 +66,7 @@ export default function ChooseSeats() {
   return (
     <div className="choose-seat__container">
       <div className="choose-seat">
-        {/* <h2>Booking</h2> */}
-        <section className="listChair">{renderListChair()}</section>
-        {/* <div className="dat-ve">
-          <button
-            className="btn btn-success"
-            onClick={() => {
-              const danhSachVe = listChair.filter((chair) => {
-                return chair.dangChon;
-              });
-              console.log(danhSachVe);
-              dispatch(postBookingTicket(maLichChieu, danhSachVe));
-            }}
-          >
-            Đặt vé
-          </button>
-        </div> */}
+        <div className="listChair">{renderListChair()}</div>
       </div>
     </div>
   );
